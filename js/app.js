@@ -2,7 +2,11 @@ function demarrerLexiLab(LEXICON){
 const entries=LEXICON.entries, excluded=new Set(LEXICON.excluded);
 const apostrophes=/[’‘`´]/g;
 function analyze(){
- const raw=document.getElementById('input').value.toLocaleLowerCase('fr').replace(apostrophes,"'");
+ const original=document.getElementById('input').value;
+ const motsRedac=original.toLowerCase().trim().split(/\s+/).filter(m=>m.length>0);
+ const diversite=motsRedac.length?new Set(motsRedac).size/motsRedac.length*100:0;
+ document.getElementById('diversity-score').textContent=motsRedac.length?diversite.toLocaleString('fr-FR',{maximumFractionDigits:1,minimumFractionDigits:1})+' %':'—';
+ const raw=original.toLocaleLowerCase('fr').replace(apostrophes,"'");
  const tokens=raw.match(/[\p{L}]+(?:[-'][\p{L}]+)*/gu)||[];
  const records=[], unknown=[], dropped=[];const unique=new Map();
  for(const token of tokens){
