@@ -73,16 +73,19 @@ function renderHighlights(original){
  const counts=new Map();
  for(const unit of units)counts.set(unit.key,(counts.get(unit.key)||0)+1);
  const mode=document.getElementById('repetition-enabled').checked?'repetition':'frequency';
+ const repeatedKeys=[...counts].filter(([,count])=>count>1).map(([key])=>key);
+ const colorByKey=new Map(repeatedKeys.map((key,index)=>[key,index%16]));
  let result='',last=0;
  for(const unit of units){
    result+=esc(original.slice(last,unit.start));
-   const cls=mode==='repetition'?(counts.get(unit.key)>1?'repeated':''):unit.frequencyClass;
+   const cls=mode==='repetition'?(counts.get(unit.key)>1?'repeat-color-'+colorByKey.get(unit.key):''):unit.frequencyClass;
    const visible=esc(original.slice(unit.start,unit.end));
-   result+=cls?'<span class="'+cls+'"'+(mode==='frequency'?' data-frequency="'+(cls==='freq-very-common'?'Très fréquent':cls==='freq-common'?'Fréquent':cls==='freq-uncommon'?'Peu fréquent':'Rare')+'"':'')+'>'+visible+'</span>':visible;
+   result+=cls?'<span class="'+cls+'"'+(mode==='frequency'?' data-frequency="'+(cls==='freq-very-common'?'Très fréquent':cls==='freq-common'?'Fréquent':cls==='freq-uncommon'?'Peu fréquent':'Rare')+'"':' data-repeat-key="'+esc(unit.key)+'"')+'>'+visible+'</span>':visible;
    last=unit.end;
  }
  result+=esc(original.slice(last));
  layer.innerHTML=result+'\n';
+ hoveredRepeatKey=null;
  syncHighlightScroll();
 }
 function syncHighlightScroll(){
@@ -95,6 +98,8 @@ const input=document.getElementById('input');
 input.addEventListener('scroll',()=>{syncHighlightScroll();document.getElementById('word-tooltip').hidden=true;});
 const tooltip=document.getElementById('word-tooltip');
 input.addEventListener('mousemove',event=>{
+ if(repetitionToggle.checked){tooltip.hidden=true;highlightHoveredGroup(event);return;}
+ clearHoveredGroup();
  if(!frequencyToggle.checked){tooltip.hidden=true;return;}
  const layer=document.getElementById('highlight');
  let found=null;
@@ -112,7 +117,27 @@ input.addEventListener('mousemove',event=>{
  tooltip.style.left=Math.min(event.clientX-bounds.left+12,bounds.width-tooltip.offsetWidth-4)+'px';
  tooltip.style.top=Math.max(0,event.clientY-bounds.top-34)+'px';
 });
-input.addEventListener('mouseleave',()=>{tooltip.hidden=true;});
+input.addEventListener('mouseleave',()=>{tooltip.hidden=true;clearHoveredGroup();});
+function clearHoveredGroup(){
+ const layer=document.getElementById('highlight');
+ layer.classList.remove('repeat-focus');
+ for(const span of layer.querySelectorAll('.repeat-selected'))span.classList.remove('repeat-selected');
+}
+let hoveredRepeatKey=null;
+function highlightHoveredGroup(event){
+ const layer=document.getElementById('highlight');
+ let found=null;
+ for(const span of layer.querySelectorAll('[data-repeat-key]')){
+   for(const rect of span.getClientRects()){
+     if(event.clientX>=rect.left&&event.clientX<=rect.right&&event.clientY>=rect.top&&event.clientY<=rect.bottom){found=span.dataset.repeatKey;break;}
+   }
+   if(found!==null)break;
+ }
+ if(found===hoveredRepeatKey)return;
+ hoveredRepeatKey=found;
+ layer.classList.toggle('repeat-focus',found!==null);
+ for(const span of layer.querySelectorAll('[data-repeat-key]'))span.classList.toggle('repeat-selected',found!==null&&span.dataset.repeatKey===found);
+}
 const frequencyToggle=document.getElementById('highlight-enabled');
 const repetitionToggle=document.getElementById('repetition-enabled');
 function updateMode(changed){
@@ -121,6 +146,8 @@ function updateMode(changed){
  const enabled=frequencyToggle.checked||repetitionToggle.checked;
  input.classList.toggle('highlight-on',enabled);
  document.getElementById('word-tooltip').hidden=true;
+ hoveredRepeatKey=null;
+ clearHoveredGroup();
  document.getElementById('highlight').hidden=!enabled;
  document.querySelector('.frequency-legend').hidden=!frequencyToggle.checked;
  if(enabled)renderHighlights(input.value);
