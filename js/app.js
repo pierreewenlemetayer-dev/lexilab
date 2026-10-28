@@ -94,7 +94,6 @@ function syncHighlightScroll(){
  layer.scrollTop=input.scrollTop;layer.scrollLeft=input.scrollLeft;
 }
 function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-analyze();
 const input=document.getElementById('input');
 input.addEventListener('scroll',()=>{syncHighlightScroll();document.getElementById('word-tooltip').hidden=true;});
 const tooltip=document.getElementById('word-tooltip');
@@ -154,6 +153,12 @@ function updateMode(changed){
 }
 frequencyToggle.addEventListener('change',()=>updateMode('frequency'));
 repetitionToggle.addEventListener('change',()=>updateMode('repetition'));
-let pending; document.getElementById('input').addEventListener('input',()=>{clearTimeout(pending);pending=setTimeout(analyze,220)});
+let pending; input.addEventListener('input',()=>{
+ clearTimeout(pending);
+ // Ne jamais masquer le texte tant que le calque n'a pas été actualisé.
+ input.classList.remove('highlight-on');
+ pending=setTimeout(()=>{try{analyze();updateMode();}catch(error){console.error(error);input.classList.remove('highlight-on');}},220);
+});
+try{analyze();updateMode();}catch(error){console.error(error);input.classList.remove('highlight-on');}
 
 }
