@@ -22,7 +22,7 @@ function analyze(){
  const fmt=v=>v===null?'—':v.toLocaleString('fr-FR',{maximumFractionDigits:3,minimumFractionDigits:3});
  const low=-2.660986,high=-1.074392;
  const note10=ifraw===null?null:Math.max(1,Math.min(10,1+9*(ifraw-low)/(high-low)));
- document.getElementById('score').textContent=note10===null?'—':note10.toLocaleString('fr-FR',{minimumFractionDigits:1,maximumFractionDigits:1})+' / 10';
+ document.getElementById('score').textContent=note10===null?'—':note10.toLocaleString('fr-FR',{minimumFractionDigits:1,maximumFractionDigits:1});
  const marker=document.getElementById('marker');
  const pct=note10===null?0:(note10-1)/9*100;
  marker.style.left=pct+'%';
