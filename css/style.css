@@ -91,3 +91,24 @@ button:hover{background:var(--accent-fonce);border-color:var(--accent-fonce)}
 .sidebar .track{margin-top:18px}
 .sidebar .diversity-block{margin-top:20px;padding-top:18px}
 .sidebar .diversity-score{font-size:38px;margin-top:7px}
+
+/* Seize couleurs pastel pour les groupes de répétitions. */
+.highlight .repeat-color-0{background:#B9D9FA}
+.highlight .repeat-color-1{background:#FFCFA8}
+.highlight .repeat-color-2{background:#BDE6C0}
+.highlight .repeat-color-3{background:#F3B9D4}
+.highlight .repeat-color-4{background:#D6C5FA}
+.highlight .repeat-color-5{background:#B2E6E2}
+.highlight .repeat-color-6{background:#F8E39B}
+.highlight .repeat-color-7{background:#C5D3E3}
+.highlight .repeat-color-8{background:#F6C2B2}
+.highlight .repeat-color-9{background:#D8E7A9}
+.highlight .repeat-color-10{background:#D1B5E7}
+.highlight .repeat-color-11{background:#A9D5C6}
+.highlight .repeat-color-12{background:#F2B8A1}
+.highlight .repeat-color-13{background:#B4C8F3}
+.highlight .repeat-color-14{background:#E6CFA7}
+.highlight .repeat-color-15{background:#E4BFC9}
+
+.highlight.repeat-focus [data-repeat-key]:not(.repeat-selected){background:transparent!important;color:#9B978F}
+.highlight.repeat-focus .repeat-selected{outline:2px solid #4C4032;outline-offset:1px;border-radius:2px;position:relative}
