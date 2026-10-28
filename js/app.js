@@ -3,9 +3,20 @@ const entries=LEXICON.entries, excluded=new Set(LEXICON.excluded);
 const apostrophes=/[’‘`´]/g;
 function analyze(){
  const original=document.getElementById('input').value;
- const motsRedac=original.toLowerCase().trim().split(/\s+/).filter(m=>m.length>0);
- const diversite=motsRedac.length?new Set(motsRedac).size/motsRedac.length*100:0;
- document.getElementById('diversity-score').textContent=motsRedac.length?diversite.toLocaleString('fr-FR',{maximumFractionDigits:1,minimumFractionDigits:1})+' %':'—';
+ // Diversité : aucune exclusion ; les formes inconnues ou exclues restent comptées.
+ // Le découpage est indépendant de celui de l'indice de fréquence, qui reste inchangé.
+ const formes=original.toLocaleLowerCase('fr').replace(apostrophes,"'").match(/[\\p{L}]+(?:[-'][\\p{L}]+)*/gu)||[];
+ const unitesDiversite=[];
+ for(const forme of formes){
+   const parties=(entries[forme]||excluded.has(forme))?[forme]:forme.split("'");
+   for(const partie of parties){
+     if(!partie)continue;
+     const hit=excluded.has(partie)?null:entries[partie];
+     unitesDiversite.push(hit?'lemme:'+hit[0]+'|'+hit[1]:'forme:'+partie);
+   }
+ }
+ const diversite=unitesDiversite.length?new Set(unitesDiversite).size/unitesDiversite.length*100:0;
+ document.getElementById('diversity-score').textContent=unitesDiversite.length?diversite.toLocaleString('fr-FR',{maximumFractionDigits:1,minimumFractionDigits:1})+' %':'—';
  const raw=original.toLocaleLowerCase('fr').replace(apostrophes,"'");
  const tokens=raw.match(/[\p{L}]+(?:[-'][\p{L}]+)*/gu)||[];
  const records=[], unknown=[], dropped=[];const unique=new Map();
