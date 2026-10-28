@@ -1,0 +1,16 @@
+name: Comparer versions Lexi Lab
+on:
+  push:
+    branches: [test-separation-donnees]
+    paths: ['.github/workflows/comparer-versions.yml']
+permissions:
+  contents: read
+jobs:
+  comparer:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Comparer les resultats du moteur lexical
+        run: node scripts/comparer_versions.cjs
