@@ -1,6 +1,6 @@
 
 
-:root{--fond:#fcf7f7;--papier:#fffdfd;--texte:#352c2e;--secondaire:#796b70;--accent:#a34855;--accent-fonce:#853441;--accent-pale:#f2e1e3;--bordure:#e9d9dc;--ombre:0 8px 25px rgba(100,45,65,.08);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;color:var(--texte);background:var(--fond)}
+:root{--fond:#FCFBF8;--papier:#FFFFFF;--texte:#414047;--secondaire:#777078;--accent:#414047;--accent-fonce:#555158;--accent-pale:#EEEAE5;--bordure:#BFB7B3;--ombre:0 8px 25px rgba(65,64,71,.08);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;color:var(--texte);background:var(--fond)}
 *{box-sizing:border-box}
 body{margin:0;background:var(--fond);color:var(--texte);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.5}
 header{text-align:center;padding:42px 20px 28px;margin:0 auto;max-width:1200px;background:transparent;border:0}
@@ -13,8 +13,8 @@ main{max-width:1200px;margin:8px auto 40px;padding:0 20px}
 .eyebrow{color:var(--accent-fonce);font-weight:700;font-size:13px;letter-spacing:.07em;text-transform:uppercase}
 .score{font-size:58px;font-weight:750;color:var(--accent);margin:20px 0 7px;font-variant-numeric:tabular-nums}
 .scale{display:flex;justify-content:space-between;font-size:12px;color:var(--secondaire);margin-top:12px}
-.track{height:14px;border-radius:12px;background:linear-gradient(90deg,#f2e1e3,#d99da6,#bd6c79,#853441);position:relative;margin-top:26px}
-.marker{position:absolute;left:0%;top:-6px;width:4px;height:26px;border-radius:4px;background:#642733;box-shadow:0 0 0 3px white;transition:left .2s}
+.track{height:14px;border-radius:12px;background:linear-gradient(90deg,#EEEAE5,#D8D0CB,#A49A9D,#555158);position:relative;margin-top:26px}
+.marker{position:absolute;left:0%;top:-6px;width:4px;height:26px;border-radius:4px;background:#414047;box-shadow:0 0 0 3px white;transition:left .2s}
 .note{font-size:12px;line-height:1.55;color:var(--secondaire);margin-top:22px}
 .editor{padding:25px;display:flex;flex-direction:column;min-height:490px}
 .editor label{font-weight:700;font-size:17px;margin-bottom:13px}
