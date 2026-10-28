@@ -7,7 +7,7 @@ const assert=require('assert');
  page.on('pageerror',e=>errors.push(e.message));
  await page.goto('http://127.0.0.1:8765/',{waitUntil:'networkidle'});
  await page.locator('#input').fill("L'origine de cette histoire est ancienne. Le chat regarde la maison.");
- await page.locator('#go').click();
+ await page.waitForFunction(() => document.querySelector('#score').textContent !== '—');
  const score=await page.locator('#score').innerText();
  const note=await page.locator('#gauge-note').innerText();
  assert.match(score,/^-?\d+[,.]\d{3}$/,'Score absent');
