@@ -52,7 +52,7 @@ function analyze(){
 function renderHighlights(original){
  const layer=document.getElementById('highlight');
  const text=original.toLocaleLowerCase('fr').replace(apostrophes,"'");
- const pattern=/[\\p{L}]+(?:[-'][\\p{L}]+)*/gu;
+ const pattern=/[\p{L}]+(?:[-'][\p{L}]+)*/gu;
  let result='',last=0,match;
  while((match=pattern.exec(text))!==null){
    result+=esc(original.slice(last,match.index));
