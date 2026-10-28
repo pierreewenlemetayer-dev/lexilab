@@ -1,4 +1,5 @@
 function demarrerLexiLab(LEXICON){
+let hoveredRepeatKey=null;
 const entries=LEXICON.entries, excluded=new Set(LEXICON.excluded);
 const apostrophes=/[’‘`´]/g;
 function analyze(){
@@ -123,7 +124,6 @@ function clearHoveredGroup(){
  layer.classList.remove('repeat-focus');
  for(const span of layer.querySelectorAll('.repeat-selected'))span.classList.remove('repeat-selected');
 }
-let hoveredRepeatKey=null;
 function highlightHoveredGroup(event){
  const layer=document.getElementById('highlight');
  let found=null;
