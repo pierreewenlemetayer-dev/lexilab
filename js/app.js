@@ -78,7 +78,7 @@ function renderHighlights(original){
    result+=esc(original.slice(last,unit.start));
    const cls=mode==='repetition'?(counts.get(unit.key)>1?'repeated':''):unit.frequencyClass;
    const visible=esc(original.slice(unit.start,unit.end));
-   result+=cls?'<span class="'+cls+'">'+visible+'</span>':visible;
+   result+=cls?'<span class="'+cls+'"'+(mode==='frequency'?' data-frequency="'+(cls==='freq-very-common'?'Très fréquent':cls==='freq-common'?'Fréquent':cls==='freq-uncommon'?'Peu fréquent':'Rare')+'"':'')+'>'+visible+'</span>':visible;
    last=unit.end;
  }
  result+=esc(original.slice(last));
@@ -92,7 +92,27 @@ function syncHighlightScroll(){
 function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 analyze();
 const input=document.getElementById('input');
-input.addEventListener('scroll',syncHighlightScroll);
+input.addEventListener('scroll',()=>{syncHighlightScroll();document.getElementById('word-tooltip').hidden=true;});
+const tooltip=document.getElementById('word-tooltip');
+input.addEventListener('mousemove',event=>{
+ if(!frequencyToggle.checked){tooltip.hidden=true;return;}
+ const layer=document.getElementById('highlight');
+ let found=null;
+ for(const span of layer.querySelectorAll('[data-frequency]')){
+   for(const rect of span.getClientRects()){
+     if(event.clientX>=rect.left&&event.clientX<=rect.right&&event.clientY>=rect.top&&event.clientY<=rect.bottom){
+       found=span.dataset.frequency;break;
+     }
+   }
+   if(found)break;
+ }
+ if(!found){tooltip.hidden=true;return;}
+ tooltip.textContent=found;tooltip.hidden=false;
+ const bounds=input.getBoundingClientRect();
+ tooltip.style.left=Math.min(event.clientX-bounds.left+12,bounds.width-tooltip.offsetWidth-4)+'px';
+ tooltip.style.top=Math.max(0,event.clientY-bounds.top-34)+'px';
+});
+input.addEventListener('mouseleave',()=>{tooltip.hidden=true;});
 const frequencyToggle=document.getElementById('highlight-enabled');
 const repetitionToggle=document.getElementById('repetition-enabled');
 function updateMode(changed){
@@ -100,6 +120,7 @@ function updateMode(changed){
  if(changed==='repetition'&&repetitionToggle.checked)frequencyToggle.checked=false;
  const enabled=frequencyToggle.checked||repetitionToggle.checked;
  input.classList.toggle('highlight-on',enabled);
+ document.getElementById('word-tooltip').hidden=true;
  document.getElementById('highlight').hidden=!enabled;
  document.querySelector('.frequency-legend').hidden=!frequencyToggle.checked;
  if(enabled)renderHighlights(input.value);
