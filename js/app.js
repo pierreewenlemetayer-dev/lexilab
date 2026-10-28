@@ -51,27 +51,35 @@ function analyze(){
 }
 function renderHighlights(original){
  const layer=document.getElementById('highlight');
- const text=original.toLocaleLowerCase('fr').replace(apostrophes,"'");
+ const normalized=original.toLocaleLowerCase('fr').replace(apostrophes,"'");
  const pattern=/[\p{L}]+(?:[-'][\p{L}]+)*/gu;
- let result='',last=0,match;
- while((match=pattern.exec(text))!==null){
-   result+=esc(original.slice(last,match.index));
-   const token=match[0],originalToken=original.slice(match.index,match.index+token.length);
-   const parts=(entries[token]||excluded.has(token))?[token]:token.split("'");
+ const units=[],matches=[...normalized.matchAll(pattern)];
+ // Construire les unités et leurs positions exactes pour conserver chaque espace et ponctuation.
+ for(const match of matches){
+   const token=match[0],parts=(entries[token]||excluded.has(token))?[token]:token.split("'");
    let offset=0;
-   for(let i=0;i<parts.length;i++){
-     const part=parts[i];if(!part)continue;
+   for(const part of parts){
+     if(!part)continue;
      const index=token.indexOf(part,offset);
-     if(index>offset)result+=esc(originalToken.slice(offset,index));
+     if(index<0)continue;
      const hit=excluded.has(part)?null:entries[part];
+     const key=hit?'lemme:'+hit[0]+'|'+hit[1]:'forme:'+part;
      const freq=hit?Number(hit[2]):NaN;
-     const category=Number.isFinite(freq)&&freq>0?(freq>=100?'freq-very-common':freq>=10?'freq-common':freq>=1?'freq-uncommon':'freq-rare'):'';
-     const visible=esc(originalToken.slice(index,index+part.length));
-     result+=category?'<span class="'+category+'">'+visible+'</span>':visible;
+     const frequencyClass=Number.isFinite(freq)&&freq>0?(freq>=100?'freq-very-common':freq>=10?'freq-common':freq>=1?'freq-uncommon':'freq-rare'):'';
+     units.push({start:match.index+index,end:match.index+index+part.length,key,frequencyClass});
      offset=index+part.length;
    }
-   result+=esc(originalToken.slice(offset));
-   last=match.index+token.length;
+ }
+ const counts=new Map();
+ for(const unit of units)counts.set(unit.key,(counts.get(unit.key)||0)+1);
+ const mode=document.getElementById('repetition-enabled').checked?'repetition':'frequency';
+ let result='',last=0;
+ for(const unit of units){
+   result+=esc(original.slice(last,unit.start));
+   const cls=mode==='repetition'?(counts.get(unit.key)>1?'repeated':''):unit.frequencyClass;
+   const visible=esc(original.slice(unit.start,unit.end));
+   result+=cls?'<span class="'+cls+'">'+visible+'</span>':visible;
+   last=unit.end;
  }
  result+=esc(original.slice(last));
  layer.innerHTML=result+'\n';
@@ -85,7 +93,19 @@ function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;',
 analyze();
 const input=document.getElementById('input');
 input.addEventListener('scroll',syncHighlightScroll);
-document.getElementById('highlight-enabled').addEventListener('change',e=>{const enabled=e.target.checked;input.classList.toggle('highlight-on',enabled);document.getElementById('highlight').hidden=!enabled;});
+const frequencyToggle=document.getElementById('highlight-enabled');
+const repetitionToggle=document.getElementById('repetition-enabled');
+function updateMode(changed){
+ if(changed==='frequency'&&frequencyToggle.checked)repetitionToggle.checked=false;
+ if(changed==='repetition'&&repetitionToggle.checked)frequencyToggle.checked=false;
+ const enabled=frequencyToggle.checked||repetitionToggle.checked;
+ input.classList.toggle('highlight-on',enabled);
+ document.getElementById('highlight').hidden=!enabled;
+ document.querySelector('.frequency-legend').hidden=!frequencyToggle.checked;
+ if(enabled)renderHighlights(input.value);
+}
+frequencyToggle.addEventListener('change',()=>updateMode('frequency'));
+repetitionToggle.addEventListener('change',()=>updateMode('repetition'));
 let pending; document.getElementById('input').addEventListener('input',()=>{clearTimeout(pending);pending=setTimeout(analyze,220)});
 
 }
