@@ -41,3 +41,28 @@ button:hover{background:var(--accent-fonce);border-color:var(--accent-fonce)}
 .about[open] summary{text-align:left;padding:16px 0}
 .site-footer{text-align:center;margin:22px 0 0;color:var(--secondaire);font-size:12px}
 #gauge-note[hidden]{display:none}
+
+/* Calque de surlignage synchronisé avec la saisie. */
+.text-layer{position:relative;flex:1;min-height:340px;display:flex}
+.text-layer textarea,.text-layer .highlight{font:16px/1.65 Arial,Helvetica,sans-serif;letter-spacing:normal;tab-size:8;white-space:pre-wrap;overflow-wrap:break-word;padding:17px;border:1px solid var(--bordure);border-radius:10px}
+.text-layer textarea{position:relative;z-index:2;min-height:340px;background:transparent;resize:vertical}
+.text-layer textarea.highlight-on{color:transparent;-webkit-text-fill-color:transparent;caret-color:var(--texte)}
+.text-layer textarea.highlight-on::selection{background:rgba(120,140,180,.28);-webkit-text-fill-color:transparent}
+.text-layer textarea::placeholder{-webkit-text-fill-color:var(--secondaire);color:var(--secondaire)}
+.text-layer .highlight{position:absolute;inset:0;z-index:1;overflow:hidden;pointer-events:none;color:var(--texte);background:#fff;border-color:transparent}
+.text-layer .highlight[hidden]{display:none}
+.highlight span{border-radius:2px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.highlight .freq-very-common{background:#F1EFEB}
+.highlight .freq-common{background:#FAEFC9}
+.highlight .freq-uncommon{background:#F9E0BC}
+.highlight .freq-rare{background:#F6DAD5}
+.highlight-controls{margin-top:12px;display:flex;flex-direction:column;gap:9px;font-size:12px;color:var(--secondaire)}
+.highlight-toggle{display:flex;align-items:center;gap:7px;cursor:pointer}
+.highlight-toggle input{accent-color:var(--accent)}
+.frequency-legend{display:flex;flex-wrap:wrap;gap:8px 14px}
+.frequency-legend span{display:inline-flex;align-items:center;gap:5px}
+.frequency-legend i{display:inline-block;width:13px;height:13px;border:1px solid #d6c9ad;border-radius:3px}
+.frequency-legend .freq-very-common{background:#F1EFEB}
+.frequency-legend .freq-common{background:#FAEFC9}
+.frequency-legend .freq-uncommon{background:#F9E0BC}
+.frequency-legend .freq-rare{background:#F6DAD5}
