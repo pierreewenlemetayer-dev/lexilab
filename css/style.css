@@ -76,3 +76,18 @@ button:hover{background:var(--accent-fonce);border-color:var(--accent-fonce)}
 .highlight .repeated{background:#FFE56A}
 
 .frequency-legend[hidden]{display:none}
+
+/* Palette plus lisible, légende sans valeurs et commandes côte à côte. */
+.highlight .freq-very-common,.frequency-legend .freq-very-common{background:#BDECC5}
+.highlight .freq-common,.frequency-legend .freq-common{background:#FFF0A0}
+.highlight .freq-uncommon,.frequency-legend .freq-uncommon{background:#FFD09B}
+.highlight .freq-rare,.frequency-legend .freq-rare{background:#FFB6B6}
+.highlight-toggles{display:flex;align-items:center;flex-wrap:wrap;gap:10px 24px}
+.highlight-toggle{white-space:nowrap}
+.word-tooltip{position:absolute;z-index:5;pointer-events:none;background:#40382D;color:#fff;padding:5px 9px;border-radius:6px;font-size:12px;line-height:1.3;white-space:nowrap;box-shadow:0 3px 10px #0002}
+.word-tooltip[hidden]{display:none}
+.sidebar{min-height:0;padding:21px 20px}
+.sidebar .score{font-size:50px;margin:12px 0 5px}
+.sidebar .track{margin-top:18px}
+.sidebar .diversity-block{margin-top:20px;padding-top:18px}
+.sidebar .diversity-score{font-size:38px;margin-top:7px}
