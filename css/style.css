@@ -28,3 +28,5 @@ button:hover{background:var(--accent-fonce);border-color:var(--accent-fonce)}
 
 
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+.about{margin-top:22px;padding:0 25px}.about summary{cursor:pointer;padding:18px 0;color:var(--accent-fonce);font-weight:700;list-style-position:inside}.about summary:focus-visible{outline:2px solid var(--accent);outline-offset:3px}.about-content{border-top:1px solid var(--bordure);padding:5px 0 16px;max-width:900px;color:var(--secondaire);font-size:14px;line-height:1.7}.about-content p{margin:12px 0}
