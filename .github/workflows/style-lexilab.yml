@@ -1,0 +1,10 @@
+name: Style Lexi Lab
+on: workflow_dispatch
+permissions:
+  contents: write
+jobs:
+  style:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo 'Style ready'
