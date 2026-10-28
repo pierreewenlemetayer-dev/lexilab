@@ -1,0 +1,20 @@
+name: Tester Lexi Lab dans Chromium
+on:
+  push:
+    branches: [test-separation-donnees]
+    paths: ['.github/workflows/test-navigateur.yml']
+permissions:
+  contents: read
+jobs:
+  navigateur:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Installer Chromium et Playwright
+        run: |
+          npm install --no-save playwright
+          npx playwright install --with-deps chromium
+      - name: Tester le chargement et le calcul
+        run: |
+          python3 -m http.server 8765 &
+          node scripts/test_navigateur.cjs
