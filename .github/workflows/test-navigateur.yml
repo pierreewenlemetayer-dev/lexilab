@@ -10,6 +10,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Verifier presence du script
+        run: |
+          test -f scripts/test_navigateur.cjs
+          test -f data/lexique.json
+          test -f js/app.js
       - name: Installer Chromium et Playwright
         run: |
           npm install --no-save playwright
