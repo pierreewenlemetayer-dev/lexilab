@@ -133,3 +133,16 @@ button:hover{background:var(--accent-fonce);border-color:var(--accent-fonce)}
 .goal-dot.neutral{background:#dedede;border-color:#b7b7b7}
 @media(max-width:1000px){.workspace{grid-template-columns:205px minmax(0,1fr) 205px;gap:12px}.side-card{padding:15px}.sidebar{padding:16px}}
 @media(max-width:720px){.workspace{grid-template-columns:1fr}.workspace>.sidebar{grid-column:1;grid-row:1}.workspace>.editor{grid-column:1;grid-row:2}.goals-sidebar{grid-column:1;grid-row:3}.goals-sidebar{gap:12px}}
+
+/* Alignement sur Redac Lab : objectifs à gauche, résultats à droite (205 px). */
+@media(min-width:721px){
+ .workspace{grid-template-columns:205px minmax(0,1fr) 205px}
+ .goals-sidebar{grid-column:1;grid-row:1}
+ .workspace>.editor{grid-column:2;grid-row:1}
+ .workspace>.sidebar{grid-column:3;grid-row:1}
+}
+@media(max-width:720px){
+ .goals-sidebar{grid-column:1;grid-row:1}
+ .workspace>.editor{grid-column:1;grid-row:2}
+ .workspace>.sidebar{grid-column:1;grid-row:3}
+}
