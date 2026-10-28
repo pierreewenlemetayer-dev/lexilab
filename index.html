@@ -9,13 +9,14 @@
 <div class="eyebrow">Indice de fréquence lexicale</div>
 <div class="score" id="score" aria-live="polite">—</div>
 <div class="track" role="img" aria-label="Jauge indicative du score"><div class="marker" id="marker"></div></div>
-<div class="scale"><span>Vocabulaire fréquent</span><span>Plus rare</span></div>
+<div class="scale"><span>1 · Plus fréquent</span><span>10 · Plus rare</span></div>
 <p class="note" id="gauge-note">Saisissez un texte pour commencer.</p>
 </aside>
 <section class="panel editor"><label for="input" class="sr-only">Texte à analyser</label>
 <textarea id="input" placeholder="Saisissez ou collez votre texte ici…"></textarea>
-<div class="toolbar"><span style="font-size:12px;color:#68788a">Analyse locale · Lexique 4</span></div>
+
 </section></div>
+<details class="about panel"><summary>À propos</summary><div class="about-content"><p>Lexi Lab estime la rareté du vocabulaire d’un texte à partir des fréquences lexicales de Lexique 4. L’analyse est réalisée localement dans le navigateur.</p><p>Le texte est découpé en unités lexicales. Certaines formes sont exclues ; les formes reconnues sont associées à leur lemme et à leur catégorie grammaticale. Chaque couple lemme–catégorie n’est retenu qu’une fois. L’indice brut est la moyenne des valeurs −log₁₀(fréquence) de ces couples : plus il est élevé, plus le vocabulaire reconnu est rare.</p><p>Pour faciliter la lecture, l’indice brut est présenté sur une échelle de 1 à 10, sans modifier son calcul. Cette échelle expérimentale est une conversion linéaire fondée sur les 76 textes du corpus « Récits », après correction du lexique : minimum −2,661 (1/10) et maximum −1,074 (10/10). Les résultats dépassant ces bornes sont plafonnés à l’affichage.</p><p>Il ne s’agit ni d’une note scolaire ni d’une mesure directe de compréhension ou de qualité d’écriture. L’étalonnage est limité à ce corpus narratif et devra être confronté à d’autres genres de textes. Les mots non reconnus ne participent pas à la moyenne.</p></div></details>
 <div class="hidden-diagnostics" aria-hidden="true">
 <span id="lemmas"></span><span id="coverage"></span><span id="detail"></span>
 <table><tbody id="table"></tbody></table><span id="uniques"></span>
