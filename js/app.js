@@ -19,6 +19,7 @@ function analyze(){
  }
  const diversite=unitesDiversite.length?new Set(unitesDiversite).size/unitesDiversite.length*100:0;
  document.getElementById('diversity-score').textContent=unitesDiversite.length?diversite.toLocaleString('fr-FR',{maximumFractionDigits:1,minimumFractionDigits:1})+' %':'—';
+ updateGoal('diversity-status',unitesDiversite.length?diversite:null,document.getElementById('goal-diversity').value);
  const raw=original.toLocaleLowerCase('fr').replace(apostrophes,"'");
  const tokens=raw.match(/[\p{L}]+(?:[-'][\p{L}]+)*/gu)||[];
  const records=[], unknown=[], dropped=[];const unique=new Map();
@@ -40,6 +41,7 @@ function analyze(){
  const low=-2.660986,high=-1.074392;
  const note10=ifraw===null?null:Math.max(1,Math.min(10,1+9*(ifraw-low)/(high-low)));
  document.getElementById('score').textContent=note10===null?'—':note10.toLocaleString('fr-FR',{minimumFractionDigits:1,maximumFractionDigits:1});
+ updateGoal('richness-status',note10,document.getElementById('goal-richness').value);
  const marker=document.getElementById('marker');
  const pct=note10===null?0:(note10-1)/9*100;
  marker.style.left=pct+'%';
@@ -49,6 +51,14 @@ function analyze(){
  document.getElementById('detail').textContent=`${tokens.length} unités initiales · ${records.length} unités après séparation des apostrophes · ${dropped.length} exclusions · ${unknown.length} non reconnues`;
  document.getElementById('table').innerHTML=records.map(x=>`<tr><td>${esc(x.form)}</td><td>${esc(x.status)}</td><td>${esc(x.lemma)}</td><td>${esc(x.pos)}</td><td class="num">${x.freq===null?'':fmt(x.freq)}</td></tr>`).join('');
  document.getElementById('uniques').textContent=items.sort((a,b)=>a.lemma.localeCompare(b.lemma,'fr')).map(x=>`${x.lemma} (${x.pos})`).join(' · ')||'—';
+}
+function updateGoal(id,score,targetValue){
+ const dot=document.getElementById(id),target=Number(targetValue);
+ const valid=targetValue!==''&&Number.isFinite(target)&&target>0&&score!==null&&Number.isFinite(score);
+ const color=!valid?'neutral':score>=target?'green':score>=target/2?'orange':'red';
+ dot.className='goal-dot '+color;
+ const names={neutral:'Objectif non défini ou texte absent',red:'Moins de la moitié de l’objectif',orange:'Au moins la moitié de l’objectif',green:'Objectif atteint'};
+ dot.setAttribute('aria-label',names[color]);dot.title=names[color];
 }
 function renderHighlights(original){
  const layer=document.getElementById('highlight');
@@ -95,6 +105,8 @@ function syncHighlightScroll(){
 }
 function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 const input=document.getElementById('input');
+document.getElementById('goal-richness').addEventListener('change',analyze);
+document.getElementById('goal-diversity').addEventListener('input',analyze);
 input.addEventListener('scroll',()=>{syncHighlightScroll();document.getElementById('word-tooltip').hidden=true;});
 const tooltip=document.getElementById('word-tooltip');
 input.addEventListener('mousemove',event=>{
