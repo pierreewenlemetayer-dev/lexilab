@@ -1,0 +1,34 @@
+from pathlib import Path
+p = Path("index.html")
+html = p.read_text(encoding="utf-8")
+start = html.index("<style>") + len("<style>")
+end = html.index("</style>", start)
+theme = """
+:root{--fond:#fcf7f7;--papier:#fffdfd;--texte:#352c2e;--secondaire:#796b70;--accent:#a34855;--accent-fonce:#853441;--accent-pale:#f2e1e3;--bordure:#e9d9dc;--ombre:0 8px 25px rgba(100,45,65,.08);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;color:var(--texte);background:var(--fond)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--fond);color:var(--texte);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.5}
+header{text-align:center;padding:42px 20px 28px;margin:0 auto;max-width:1200px;background:transparent;border:0}
+h1{margin:0;font-family:Georgia,"Times New Roman",serif;font-size:clamp(3rem,7vw,5rem);font-weight:700;letter-spacing:-.04em;line-height:1;color:var(--texte)}
+.subtitle{margin:12px 0 0;color:var(--secondaire);font-family:Georgia,"Times New Roman",serif;font-size:clamp(1.1rem,2.5vw,1.4rem);font-style:italic}
+main{max-width:1200px;margin:8px auto 40px;padding:0 20px}
+.workspace{display:grid;grid-template-columns:290px minmax(0,1fr);gap:22px;align-items:stretch}
+.panel{background:var(--papier);border:1px solid var(--bordure);border-radius:18px;box-shadow:var(--ombre)}
+.sidebar{padding:27px 24px;min-height:490px}
+.eyebrow{color:var(--accent-fonce);font-weight:700;font-size:13px;letter-spacing:.07em;text-transform:uppercase}
+.score{font-size:58px;font-weight:750;color:var(--accent);margin:20px 0 7px;font-variant-numeric:tabular-nums}
+.scale{display:flex;justify-content:space-between;font-size:12px;color:var(--secondaire);margin-top:12px}
+.track{height:14px;border-radius:12px;background:linear-gradient(90deg,#f2e1e3,#d99da6,#bd6c79,#853441);position:relative;margin-top:26px}
+.marker{position:absolute;left:0%;top:-6px;width:4px;height:26px;border-radius:4px;background:#642733;box-shadow:0 0 0 3px white;transition:left .2s}
+.note{font-size:12px;line-height:1.55;color:var(--secondaire);margin-top:22px}
+.editor{padding:25px;display:flex;flex-direction:column;min-height:490px}
+.editor label{font-weight:700;font-size:17px;margin-bottom:13px}
+textarea{width:100%;flex:1;min-height:340px;resize:vertical;border:1px solid var(--bordure);border-radius:10px;padding:17px;font:16px/1.65 Arial,Helvetica,sans-serif;color:var(--texte);background:#fff;outline:none}
+textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-pale)}
+.toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:17px}
+button{background:var(--accent);border:1px solid var(--accent);color:#fff;font-weight:700;border-radius:9px;padding:12px 22px;cursor:pointer;transition:.18s ease}
+button:hover{background:var(--accent-fonce);border-color:var(--accent-fonce)}
+#detail{display:none}.hidden-diagnostics{display:none}
+@media(max-width:720px){header{padding:32px 16px 24px}.workspace{grid-template-columns:1fr}.sidebar{min-height:auto}.editor{min-height:420px}.toolbar{flex-wrap:wrap}}
+"""
+html = html[:start] + "\n" + theme + "\n" + html[end:]
+p.write_text(html, encoding="utf-8")
