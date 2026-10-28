@@ -5,7 +5,7 @@ function analyze(){
  const original=document.getElementById('input').value;
  // Diversité : aucune exclusion ; les formes inconnues ou exclues restent comptées.
  // Le découpage est indépendant de celui de l'indice de fréquence, qui reste inchangé.
- const formes=original.toLocaleLowerCase('fr').replace(apostrophes,"'").match(/[\\p{L}]+(?:[-'][\\p{L}]+)*/gu)||[];
+ const formes=original.toLocaleLowerCase('fr').replace(apostrophes,"'").match(/[\p{L}]+(?:[-'][\p{L}]+)*/gu)||[];
  const unitesDiversite=[];
  for(const forme of formes){
    const parties=(entries[forme]||excluded.has(forme))?[forme]:forme.split("'");
@@ -41,7 +41,7 @@ function analyze(){
  const marker=document.getElementById('marker');
  const pct=note10===null?0:(note10-1)/9*100;
  marker.style.left=pct+'%';
- document.getElementById('gauge-note').textContent=ifraw===null?'Saisissez un texte pour commencer.':'Échelle expérimentale étalonnée sur 76 récits · indice brut : '+fmt(ifraw)+'.';
+ document.getElementById('raw-index').textContent=fmt(ifraw);
  document.getElementById('lemmas').textContent=items.length;
  document.getElementById('coverage').textContent=records.length?Math.round(100*recognized/records.length)+' %':'—';
  document.getElementById('detail').textContent=`${tokens.length} unités initiales · ${records.length} unités après séparation des apostrophes · ${dropped.length} exclusions · ${unknown.length} non reconnues`;
