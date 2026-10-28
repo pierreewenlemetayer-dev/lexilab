@@ -3,6 +3,7 @@ const entries=LEXICON.entries, excluded=new Set(LEXICON.excluded);
 const apostrophes=/[’‘`´]/g;
 function analyze(){
  const original=document.getElementById('input').value;
+ renderHighlights(original);
  // Diversité : aucune exclusion ; les formes inconnues ou exclues restent comptées.
  // Le découpage est indépendant de celui de l'indice de fréquence, qui reste inchangé.
  const formes=original.toLocaleLowerCase('fr').replace(apostrophes,"'").match(/[\p{L}]+(?:[-'][\p{L}]+)*/gu)||[];
@@ -48,8 +49,43 @@ function analyze(){
  document.getElementById('table').innerHTML=records.map(x=>`<tr><td>${esc(x.form)}</td><td>${esc(x.status)}</td><td>${esc(x.lemma)}</td><td>${esc(x.pos)}</td><td class="num">${x.freq===null?'':fmt(x.freq)}</td></tr>`).join('');
  document.getElementById('uniques').textContent=items.sort((a,b)=>a.lemma.localeCompare(b.lemma,'fr')).map(x=>`${x.lemma} (${x.pos})`).join(' · ')||'—';
 }
+function renderHighlights(original){
+ const layer=document.getElementById('highlight');
+ const text=original.toLocaleLowerCase('fr').replace(apostrophes,"'");
+ const pattern=/[\\p{L}]+(?:[-'][\\p{L}]+)*/gu;
+ let result='',last=0,match;
+ while((match=pattern.exec(text))!==null){
+   result+=esc(original.slice(last,match.index));
+   const token=match[0],originalToken=original.slice(match.index,match.index+token.length);
+   const parts=(entries[token]||excluded.has(token))?[token]:token.split("'");
+   let offset=0;
+   for(let i=0;i<parts.length;i++){
+     const part=parts[i];if(!part)continue;
+     const index=token.indexOf(part,offset);
+     if(index>offset)result+=esc(originalToken.slice(offset,index));
+     const hit=excluded.has(part)?null:entries[part];
+     const freq=hit?Number(hit[2]):NaN;
+     const category=Number.isFinite(freq)&&freq>0?(freq>=100?'freq-very-common':freq>=10?'freq-common':freq>=1?'freq-uncommon':'freq-rare'):'';
+     const visible=esc(originalToken.slice(index,index+part.length));
+     result+=category?'<span class="'+category+'">'+visible+'</span>':visible;
+     offset=index+part.length;
+   }
+   result+=esc(originalToken.slice(offset));
+   last=match.index+token.length;
+ }
+ result+=esc(original.slice(last));
+ layer.innerHTML=result+'\n';
+ syncHighlightScroll();
+}
+function syncHighlightScroll(){
+ const input=document.getElementById('input'),layer=document.getElementById('highlight');
+ layer.scrollTop=input.scrollTop;layer.scrollLeft=input.scrollLeft;
+}
 function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 analyze();
+const input=document.getElementById('input');
+input.addEventListener('scroll',syncHighlightScroll);
+document.getElementById('highlight-enabled').addEventListener('change',e=>{const enabled=e.target.checked;input.classList.toggle('highlight-on',enabled);document.getElementById('highlight').hidden=!enabled;});
 let pending; document.getElementById('input').addEventListener('input',()=>{clearTimeout(pending);pending=setTimeout(analyze,220)});
 
 }
