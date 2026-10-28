@@ -1,8 +1,8 @@
 name: Tester Lexi Lab dans Chromium
 on:
   push:
-    branches: [test-separation-donnees]
-    paths: ['.github/workflows/test-navigateur.yml', 'scripts/test_navigateur.cjs']
+    branches: [test-separation-donnees, interface-sans-bouton]
+    paths: ['.github/workflows/test-navigateur.yml', 'scripts/test_navigateur.cjs', 'index.html', 'js/app.js', 'css/style.css']
 permissions:
   contents: read
 jobs:
