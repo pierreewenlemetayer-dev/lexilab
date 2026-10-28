@@ -1,5 +1,6 @@
 name: Style Lexi Lab
-on: workflow_dispatch
+on:
+  workflow_dispatch:
 permissions:
   contents: write
 jobs:
@@ -7,4 +8,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: echo 'Style ready'
+      - name: Harmoniser le style
+        run: python scripts/appliquer_theme.py
+      - name: Enregistrer la modification
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          if ! git diff --cached --quiet; then
+            git commit -m "Appliquer la charte rouge brique"
+            git push
+          fi
