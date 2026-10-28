@@ -20,11 +20,13 @@ function analyze(){
  const items=[...unique.values()], ifraw=items.length?items.reduce((s,x)=>s-Math.log10(x.freq),0)/items.length:null;
  const recognized=records.filter(x=>x.status==='Retenu').length;
  const fmt=v=>v===null?'—':v.toLocaleString('fr-FR',{maximumFractionDigits:3,minimumFractionDigits:3});
- document.getElementById('score').textContent=fmt(ifraw);
+ const low=-2.660986,high=-1.074392;
+ const note10=ifraw===null?null:Math.max(1,Math.min(10,1+9*(ifraw-low)/(high-low)));
+ document.getElementById('score').textContent=note10===null?'—':note10.toLocaleString('fr-FR',{minimumFractionDigits:1,maximumFractionDigits:1})+' / 10';
  const marker=document.getElementById('marker');
- const pct=ifraw===null?0:Math.max(0,Math.min(100,((ifraw+4)/6)*100));
+ const pct=note10===null?0:(note10-1)/9*100;
  marker.style.left=pct+'%';
- document.getElementById('gauge-note').textContent=ifraw===null?'Saisissez un texte pour commencer.':'Position indicative sur une plage provisoire de −4 à +2 (non étalonnée).';
+ document.getElementById('gauge-note').textContent=ifraw===null?'Saisissez un texte pour commencer.':'Échelle expérimentale étalonnée sur 76 récits · indice brut : '+fmt(ifraw)+'.';
  document.getElementById('lemmas').textContent=items.length;
  document.getElementById('coverage').textContent=records.length?Math.round(100*recognized/records.length)+' %':'—';
  document.getElementById('detail').textContent=`${tokens.length} unités initiales · ${records.length} unités après séparation des apostrophes · ${dropped.length} exclusions · ${unknown.length} non reconnues`;
