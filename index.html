@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Lexi Lab — Évaluer la richesse de vocabulaire</title>
-<link rel="stylesheet" href="css/style.css"></head>
+<link rel="stylesheet" href="css/style.css?v=20261028-2"></head>
 <body>
 <header><h1>Lexi Lab</h1><p class="subtitle">Évaluer la richesse de vocabulaire</p></header>
 <main><div class="workspace">
@@ -23,5 +23,5 @@
 <span id="lemmas"></span><span id="coverage"></span><span id="detail"></span>
 <table><tbody id="table"></tbody></table><span id="uniques"></span>
 </div></main>
-<script src="js/app.js"></script>
+<script src="js/app.js?v=20261028-2"></script>
 <script>fetch("data/lexique.json").then(r=>{if(!r.ok)throw Error("Dictionnaire indisponible");return r.json()}).then(demarrerLexiLab).catch(e=>{console.error(e);const note=document.getElementById("gauge-note");note.hidden=false;note.textContent="Erreur de chargement du dictionnaire."})</script></body></html>
