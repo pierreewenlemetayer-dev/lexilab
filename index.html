@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Lexi Lab — Évaluer la richesse de vocabulaire</title>
-<link rel="stylesheet" href="css/style.css?v=20261028-6"></head>
+<link rel="stylesheet" href="css/style.css?v=20261029-1"></head>
 <body>
 <header><h1>Lexi Lab</h1><p class="subtitle">Travaillez votre vocabulaire</p></header>
 <main><div class="workspace">
@@ -18,12 +18,24 @@
 
 </section><aside class="goals-sidebar" aria-label="Objectifs et outils utiles">
 <div class="panel side-card"><div class="eyebrow">🎯 Objectifs</div>
-<label for="goal-richness">Richesse du lexique (1 à 10)</label>
-<select id="goal-richness"><option value="">Choisir un objectif</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option></select>
+<div class="goal-group">
+<label for="goal-words">Nombre total de mots <output id="goal-words-value">—</output></label>
+<input class="goal-slider" id="goal-words" type="range" min="50" max="800" step="50" value="300" aria-label="Objectif nombre total de mots">
+<div class="goal-scale"><span>50</span><span>800 mots</span></div>
+<p class="goal-status">Objectif atteint : <span class="goal-dot neutral" id="words-status" aria-label="Objectif non défini"></span></p>
+</div>
+<div class="goal-group">
+<label for="goal-richness">Richesse du lexique <output id="goal-richness-value">—</output></label>
+<input class="goal-slider" id="goal-richness" type="range" min="1" max="10" step="1" value="5" aria-label="Objectif richesse du lexique">
+<div class="goal-scale"><span>1</span><span>10</span></div>
 <p class="goal-status">Objectif atteint : <span class="goal-dot neutral" id="richness-status" aria-label="Objectif non défini"></span></p>
-<label for="goal-diversity">Diversité lexicale (%)</label>
-<input id="goal-diversity" type="number" min="1" max="100" step="1" placeholder="Choisir un objectif">
+</div>
+<div class="goal-group">
+<label for="goal-diversity">Diversité lexicale <output id="goal-diversity-value">—</output></label>
+<input class="goal-slider" id="goal-diversity" type="range" min="1" max="100" step="1" value="55" aria-label="Objectif diversité lexicale">
+<div class="goal-scale"><span>1 %</span><span>100 %</span></div>
 <p class="goal-status">Objectif atteint : <span class="goal-dot neutral" id="diversity-status" aria-label="Objectif non défini"></span></p>
+</div>
 </div>
 <div class="panel side-card"><div class="eyebrow">🔗 Outils utiles</div>
 <p><a href="https://www.synonymo.fr/" target="_blank" rel="noopener noreferrer">Synonymes</a></p>
@@ -36,5 +48,5 @@
 <span id="lemmas"></span><span id="coverage"></span><span id="detail"></span>
 <table><tbody id="table"></tbody></table><span id="uniques"></span>
 </div></main>
-<script src="js/app.js?v=20261028-6"></script>
+<script src="js/app.js?v=20261029-1"></script>
 <script>fetch("data/lexique.json").then(r=>{if(!r.ok)throw Error("Dictionnaire indisponible");return r.json()}).then(demarrerLexiLab).catch(e=>{console.error(e);const note=document.getElementById("gauge-note");note.hidden=false;note.textContent="Erreur de chargement du dictionnaire."})</script></body></html>
