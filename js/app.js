@@ -2,6 +2,9 @@ function demarrerLexiLab(LEXICON){
 let hoveredRepeatKey=null;
 const entries=LEXICON.entries, excluded=new Set(LEXICON.excluded);
 const apostrophes=/[’‘`´]/g;
+const chosenGoals=new Set();
+function goalValue(id){return chosenGoals.has(id)?document.getElementById(id).value:'';}
+function refreshGoalLabels(){for(const [id,suffix] of [['goal-words',' mots'],['goal-richness',' / 10'],['goal-diversity',' %']])document.getElementById(id+'-value').textContent=chosenGoals.has(id)?document.getElementById(id).value+suffix:'—';}
 function analyze(){
  const original=document.getElementById('input').value;
  renderHighlights(original);
@@ -17,9 +20,10 @@ function analyze(){
      unitesDiversite.push(hit?'lemme:'+hit[0]+'|'+hit[1]:'forme:'+partie);
    }
  }
+ updateGoal('words-status',formes.length?formes.length:null,goalValue('goal-words'));
  const diversite=unitesDiversite.length?new Set(unitesDiversite).size/unitesDiversite.length*100:0;
  document.getElementById('diversity-score').textContent=unitesDiversite.length?diversite.toLocaleString('fr-FR',{maximumFractionDigits:1,minimumFractionDigits:1})+' %':'—';
- updateGoal('diversity-status',unitesDiversite.length?diversite:null,document.getElementById('goal-diversity').value);
+ updateGoal('diversity-status',unitesDiversite.length?diversite:null,goalValue('goal-diversity'));
  const raw=original.toLocaleLowerCase('fr').replace(apostrophes,"'");
  const tokens=raw.match(/[\p{L}]+(?:[-'][\p{L}]+)*/gu)||[];
  const records=[], unknown=[], dropped=[];const unique=new Map();
@@ -41,7 +45,7 @@ function analyze(){
  const low=-2.660986,high=-1.074392;
  const note10=ifraw===null?null:Math.max(1,Math.min(10,1+9*(ifraw-low)/(high-low)));
  document.getElementById('score').textContent=note10===null?'—':note10.toLocaleString('fr-FR',{minimumFractionDigits:1,maximumFractionDigits:1});
- updateGoal('richness-status',note10,document.getElementById('goal-richness').value);
+ updateGoal('richness-status',note10,goalValue('goal-richness'));
  const marker=document.getElementById('marker');
  const pct=note10===null?0:(note10-1)/9*100;
  marker.style.left=pct+'%';
@@ -105,8 +109,8 @@ function syncHighlightScroll(){
 }
 function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 const input=document.getElementById('input');
-document.getElementById('goal-richness').addEventListener('change',analyze);
-document.getElementById('goal-diversity').addEventListener('input',analyze);
+for(const id of ['goal-words','goal-richness','goal-diversity'])document.getElementById(id).addEventListener('input',()=>{chosenGoals.add(id);refreshGoalLabels();analyze();});
+refreshGoalLabels();
 input.addEventListener('scroll',()=>{syncHighlightScroll();document.getElementById('word-tooltip').hidden=true;});
 const tooltip=document.getElementById('word-tooltip');
 input.addEventListener('mousemove',event=>{
