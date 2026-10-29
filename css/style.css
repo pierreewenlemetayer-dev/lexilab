@@ -208,17 +208,14 @@ input.goal-slider::-moz-range-track{background:linear-gradient(to right,var(--ac
 .difficulty-ticks{position:relative;display:flex;justify-content:space-between;height:8px;margin-top:-7px;padding:0 2px;pointer-events:none}
 .difficulty-ticks i{display:block;width:2px;height:7px;background:var(--accent-fonce);opacity:.6;border-radius:1px}
 
-/* Quatre blocs de difficulté : chaque position remplit un quart de la jauge. */
+
+/* Difficulté : quatre segments fixes, de largeur identique. */
 .difficulty-track{position:relative;width:100%;height:18px;flex:none}
-#exercise-options .difficulty-track #exercise-difficulty{position:relative;z-index:2;width:100%;height:18px;margin:0!important;background:transparent!important}
-.difficulty-track::before{content:"";position:absolute;z-index:0;left:0;right:0;top:6.5px;height:5px;border-radius:3px;background:repeating-linear-gradient(to right,var(--bordure) 0,var(--bordure) calc(25% - 2px),transparent calc(25% - 2px),transparent 25%)}
-.difficulty-fill{position:absolute;z-index:1;left:0;top:6.5px;height:5px;width:var(--difficulty-fill,50%);border-radius:3px;background:repeating-linear-gradient(to right,var(--accent-fonce) 0,var(--accent-fonce) calc(25% - 2px),transparent calc(25% - 2px),transparent 25%)}
-#exercise-difficulty::-webkit-slider-runnable-track{background:transparent!important}
-#exercise-difficulty::-moz-range-track{background:transparent!important}
+.difficulty-blocks{position:absolute;inset:6px 0 7px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:3px;pointer-events:none}
+.difficulty-blocks span{display:block;background:var(--bordure);border-radius:1px}
+.difficulty-blocks span.active{background:var(--accent-fonce)}
+#exercise-options .difficulty-track #exercise-difficulty{position:absolute;z-index:2;top:0;left:0;width:100%;height:18px;margin:0!important;padding:0;background:transparent!important;appearance:none;-webkit-appearance:none}
+#exercise-difficulty::-webkit-slider-runnable-track{height:5px;background:transparent!important}
+#exercise-difficulty::-moz-range-track{height:5px;background:transparent!important}
+#exercise-difficulty::-webkit-slider-thumb{margin-top:-7.5px}
 #exercise-options .difficulty-track + .goal-scale{margin-top:6px}
-
-/* Le curseur s'arrête au centre de chacun des quatre blocs. */
-#exercise-options .difficulty-track #exercise-difficulty{width:75%;margin:0 12.5%!important}
-
-/* Chaque position marque désormais la limite droite du bloc rempli. */
-#exercise-options .difficulty-track #exercise-difficulty{width:75%;margin:0 25% 0 0!important}
