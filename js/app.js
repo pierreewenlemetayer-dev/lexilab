@@ -162,9 +162,9 @@ exerciseEnabled.addEventListener('change',()=>{
  exerciseOptions.hidden=!exerciseEnabled.checked;
  if(!exerciseEnabled.checked){document.getElementById('exercise-title').hidden=true;document.getElementById('exercise-message').textContent='';}
 });
-document.getElementById('exercise-words').addEventListener('input',e=>{document.getElementById('exercise-words-value').textContent=e.target.value+' mots';});
+
 const difficultyLabels={1:'Très facile',2:'Facile',3:'Difficile',4:'Très difficile'};
-document.getElementById('exercise-difficulty').addEventListener('input',e=>{document.getElementById('exercise-difficulty-value').textContent=difficultyLabels[e.target.value];});
+
 document.getElementById('exercise-draw').addEventListener('click',drawExercise);
 
 for(const id of ['goal-words','goal-richness','goal-diversity'])document.getElementById(id).addEventListener('input',()=>{chosenGoals.add(id);refreshGoalLabels();analyze();});
