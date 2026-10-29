@@ -76,7 +76,7 @@ async function drawExercise(){
   const response=await fetch('https://pierreewenlemetayer-dev.github.io/recits/corpus.json',{cache:'no-store'});
   if(!response.ok)throw Error('Corpus indisponible');
   const corpus=await response.json();
-  const ranges={1:[1,3],2:[4,6],3:[7,9],4:[10,12]};
+  const ranges={1:[10,12],2:[7,9],3:[4,6],4:[1,3]};
   const [low,high]=ranges[document.getElementById('exercise-difficulty').value];
   const candidates=corpus.filter(x=>Number(x.etoiles)>=low&&Number(x.etoiles)<=high&&typeof x.texte==='string'&&x.texte.trim());
   if(!candidates.length){message.textContent='Aucun texte disponible pour cette difficulté.';return;}
@@ -163,7 +163,7 @@ exerciseEnabled.addEventListener('change',()=>{
  if(!exerciseEnabled.checked){document.getElementById('exercise-title').hidden=true;document.getElementById('exercise-message').textContent='';}
 });
 document.getElementById('exercise-words').addEventListener('input',e=>{document.getElementById('exercise-words-value').textContent=e.target.value+' mots';});
-const difficultyLabels={1:'Très difficile',2:'Difficile',3:'Facile',4:'Très facile'};
+const difficultyLabels={1:'Très facile',2:'Facile',3:'Difficile',4:'Très difficile'};
 document.getElementById('exercise-difficulty').addEventListener('input',e=>{document.getElementById('exercise-difficulty-value').textContent=difficultyLabels[e.target.value];});
 document.getElementById('exercise-draw').addEventListener('click',drawExercise);
 
