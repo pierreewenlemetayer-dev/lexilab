@@ -154,3 +154,10 @@ button:hover{background:var(--accent-fonce);border-color:var(--accent-fonce)}
 .side-card input.goal-slider{width:100%;display:block;padding:0;border:0;background:transparent;accent-color:var(--accent);cursor:pointer}
 .goal-scale{display:flex;justify-content:space-between;font-size:11px;color:var(--secondaire);margin-top:4px}
 .side-card .goal-group .goal-status{margin:8px 0 0}
+
+/* Curseurs des objectifs : trait vertical plutôt que pastille ronde. */
+.goal-slider{appearance:none;-webkit-appearance:none;height:18px;outline-offset:3px}
+.goal-slider::-webkit-slider-runnable-track{height:5px;background:var(--bordure);border-radius:3px}
+.goal-slider::-moz-range-track{height:5px;background:var(--bordure);border-radius:3px}
+.goal-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:5px;height:20px;margin-top:-7.5px;border:0;border-radius:1px;background:var(--accent-fonce);cursor:ew-resize}
+.goal-slider::-moz-range-thumb{width:5px;height:20px;border:0;border-radius:1px;background:var(--accent-fonce);cursor:ew-resize}
