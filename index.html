@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Lexi Lab — Évaluer la richesse de vocabulaire</title>
-<link rel="stylesheet" href="css/style.css?v=20261029-4"></head>
+<link rel="stylesheet" href="css/style.css?v=20261029-5"></head>
 <body>
 <header><h1>Lexi Lab</h1><p class="subtitle">Travaillez votre vocabulaire</p></header>
 <main><div class="workspace">
@@ -13,7 +13,15 @@
 <p class="note" id="gauge-note" role="alert" hidden></p>
 <div class="diversity-block"><div class="eyebrow">Diversité lexicale</div><div class="diversity-score" id="diversity-score" aria-live="polite">—</div></div>
 </aside>
-<section class="panel editor"><div class="exercise-picker"><label><input id="exercise-enabled" type="checkbox"> Améliorer un texte existant</label><div id="exercise-options" hidden><label for="exercise-words">Nombre de mots : <output id="exercise-words-value">300 mots</output></label><input class="goal-slider" id="exercise-words" type="range" min="50" max="800" step="50" value="300"><div class="goal-scale"><span>50</span><span>800 mots</span></div><label for="exercise-difficulty">Difficulté de l'exercice</label><select id="exercise-difficulty"><option value="very-hard">Très difficile</option><option value="hard">Difficile</option><option value="easy">Facile</option><option value="very-easy">Très facile</option></select><button type="button" id="exercise-draw">Tirer un texte au hasard</button><p id="exercise-message" role="status" aria-live="polite"></p></div></div><div id="exercise-title" hidden></div><label for="input" class="sr-only">Texte à analyser</label>
+<section class="panel editor"><div class="exercise-picker">
+<label class="exercise-switch"><input id="exercise-enabled" type="checkbox"> Améliorer un texte existant</label>
+<div id="exercise-options" hidden>
+<div class="exercise-controls">
+<div class="exercise-control"><label for="exercise-words">Nombre de mots <output id="exercise-words-value">300 mots</output></label><input class="goal-slider" id="exercise-words" type="range" min="50" max="800" step="50" value="300"><div class="goal-scale"><span>50</span><span>800 mots</span></div></div>
+<div class="exercise-control"><label for="exercise-difficulty">Difficulté <output id="exercise-difficulty-value">Très difficile</output></label><input class="goal-slider" id="exercise-difficulty" type="range" min="1" max="4" step="1" value="1"><div class="goal-scale"><span>Très difficile</span><span>Très facile</span></div></div>
+</div>
+<button type="button" id="exercise-draw">Tirer un texte au hasard</button><p id="exercise-message" role="status" aria-live="polite"></p>
+</div></div><div id="exercise-title" hidden></div><label for="input" class="sr-only">Texte à analyser</label>
 <div class="text-layer"><div id="word-tooltip" class="word-tooltip" role="tooltip" hidden></div><div id="highlight" class="highlight" aria-hidden="true"></div><textarea id="input" spellcheck="false" placeholder="Saisissez ou collez votre texte ici…"></textarea></div><div class="highlight-controls"><div class="highlight-toggles"><label class="highlight-toggle"><input type="checkbox" id="highlight-enabled" checked> Afficher la richesse du lexique</label><label class="highlight-toggle"><input type="checkbox" id="repetition-enabled"> Afficher les répétitions</label></div><div class="frequency-legend" aria-label="Légende des fréquences"><span><i class="freq-very-common"></i> Très courants</span><span><i class="freq-common"></i> Courants</span><span><i class="freq-uncommon"></i> Peu courants</span><span><i class="freq-rare"></i> Rares</span></div></div>
 
 </section><aside class="goals-sidebar" aria-label="Objectifs et outils utiles">
@@ -48,5 +56,5 @@
 <span id="lemmas"></span><span id="coverage"></span><span id="detail"></span>
 <table><tbody id="table"></tbody></table><span id="uniques"></span>
 </div></main>
-<script src="js/app.js?v=20261029-4"></script>
+<script src="js/app.js?v=20261029-5"></script>
 <script>fetch("data/lexique.json").then(r=>{if(!r.ok)throw Error("Dictionnaire indisponible");return r.json()}).then(demarrerLexiLab).catch(e=>{console.error(e);const note=document.getElementById("gauge-note");note.hidden=false;note.textContent="Erreur de chargement du dictionnaire."})</script></body></html>
