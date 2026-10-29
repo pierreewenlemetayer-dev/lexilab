@@ -56,6 +56,53 @@ function analyze(){
  document.getElementById('table').innerHTML=records.map(x=>`<tr><td>${esc(x.form)}</td><td>${esc(x.status)}</td><td>${esc(x.lemma)}</td><td>${esc(x.pos)}</td><td class="num">${x.freq===null?'':fmt(x.freq)}</td></tr>`).join('');
  document.getElementById('uniques').textContent=items.sort((a,b)=>a.lemma.localeCompare(b.lemma,'fr')).map(x=>`${x.lemma} (${x.pos})`).join(' · ')||'—';
 }
+function currentMetrics(){
+ const input=document.getElementById('input').value;
+ const normalized=input.toLocaleLowerCase('fr').replace(apostrophes,"'");
+ const forms=normalized.match(/[\\p{L}]+(?:[-'][\\p{L}]+)*/gu)||[];
+ const units=[];
+ for(const form of forms){const parts=(entries[form]||excluded.has(form))?[form]:form.split("'");for(const part of parts){if(!part)continue;const hit=excluded.has(part)?null:entries[part];units.push(hit?'lemme:'+hit[0]+'|'+hit[1]:'forme:'+part);}}
+ const diversity=units.length?100*new Set(units).size/units.length:0;
+ const lemmas=new Map();
+ for(const form of forms){const parts=(entries[form]||excluded.has(form))?[form]:form.split("'");for(const part of parts){if(!part||excluded.has(part))continue;const hit=entries[part];if(hit)lemmas.set(hit[0]+'|'+hit[1],hit[2]);}}
+ const freqs=[...lemmas.values()],raw=freqs.length?freqs.reduce((a,b)=>a-Math.log10(b),0)/freqs.length:null;
+ const richness=raw===null?1:Math.max(1,Math.min(10,1+9*(raw+2.660986)/(-1.074392+2.660986)));
+ return {diversity,richness};
+}
+async function drawExercise(){
+ const message=document.getElementById('exercise-message'),button=document.getElementById('exercise-draw');
+ button.disabled=true;message.textContent='Chargement du corpus…';
+ try{
+  const response=await fetch('https://pierreewenlemetayer-dev.github.io/recits/corpus.json',{cache:'no-store'});
+  if(!response.ok)throw Error('Corpus indisponible');
+  const corpus=await response.json();
+  const ranges={'very-hard':[1,3],hard:[4,6],easy:[7,9],'very-easy':[10,12]};
+  const [low,high]=ranges[document.getElementById('exercise-difficulty').value];
+  const candidates=corpus.filter(x=>Number(x.etoiles)>=low&&Number(x.etoiles)<=high&&typeof x.texte==='string'&&x.texte.trim());
+  if(!candidates.length){message.textContent='Aucun texte disponible pour cette difficulté.';return;}
+  const picked=candidates[Math.floor(Math.random()*candidates.length)];
+  const requested=Number(document.getElementById('exercise-words').value);
+  const full=picked.texte.trim();
+  const words=[...full.matchAll(/[\\p{L}]+(?:[-’'][\\p{L}]+)*/gu)];
+  let excerpt=full;
+  if(words.length>requested){
+   const boundary=words[requested-1].index+words[requested-1][0].length;
+   const tail=full.slice(boundary);
+   const match=tail.match(/[.!?…]+(?:[»”"'’)]*)?(?=\\s|$)/u);
+   excerpt=match?full.slice(0,boundary+match.index+match[0].length):full;
+  }
+  document.getElementById('input').value=excerpt;
+  const title=document.getElementById('exercise-title');
+  title.textContent=picked.numero+' – '+picked.titre;title.hidden=false;
+  const metrics=currentMetrics();
+  for(const [id,value] of [['goal-words',requested],['goal-diversity',Math.min(100,Math.ceil(metrics.diversity+3))],['goal-richness',Math.min(10,Math.ceil(metrics.richness+2))]]){
+   const slider=document.getElementById(id);slider.value=value;chosenGoals.add(id);
+  }
+  refreshGoalLabels();analyze();updateMode();
+  message.textContent='Texte tiré au hasard : '+words.length+' mots dans le récit complet. Vous pouvez maintenant améliorer le texte.';
+ }catch(error){console.error(error);message.textContent='Impossible de charger les textes de Récits. Réessayez.';}
+ finally{button.disabled=false;}
+}
 function updateGoal(id,score,targetValue){
  const dot=document.getElementById(id),target=Number(targetValue);
  const valid=targetValue!==''&&Number.isFinite(target)&&target>0&&score!==null&&Number.isFinite(score);
@@ -109,6 +156,15 @@ function syncHighlightScroll(){
 }
 function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 const input=document.getElementById('input');
+const exerciseEnabled=document.getElementById('exercise-enabled');
+const exerciseOptions=document.getElementById('exercise-options');
+exerciseEnabled.addEventListener('change',()=>{
+ exerciseOptions.hidden=!exerciseEnabled.checked;
+ if(!exerciseEnabled.checked){document.getElementById('exercise-title').hidden=true;document.getElementById('exercise-message').textContent='';}
+});
+document.getElementById('exercise-words').addEventListener('input',e=>{document.getElementById('exercise-words-value').textContent=e.target.value+' mots';});
+document.getElementById('exercise-draw').addEventListener('click',drawExercise);
+
 for(const id of ['goal-words','goal-richness','goal-diversity'])document.getElementById(id).addEventListener('input',()=>{chosenGoals.add(id);refreshGoalLabels();analyze();});
 refreshGoalLabels();
 input.addEventListener('scroll',()=>{syncHighlightScroll();document.getElementById('word-tooltip').hidden=true;});
