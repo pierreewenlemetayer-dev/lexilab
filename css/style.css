@@ -146,3 +146,11 @@ button:hover{background:var(--accent-fonce);border-color:var(--accent-fonce)}
  .workspace>.editor{grid-column:1;grid-row:2}
  .workspace>.sidebar{grid-column:1;grid-row:3}
 }
+
+/* Objectifs gradués, utilisables au clavier comme à la souris. */
+.goal-group{margin:15px 0 19px}
+.goal-group label{display:flex;justify-content:space-between;align-items:baseline;gap:5px;margin:0 0 7px}
+.goal-group output{font-size:12px;color:var(--accent-fonce);font-weight:700;white-space:nowrap}
+.side-card input.goal-slider{width:100%;display:block;padding:0;border:0;background:transparent;accent-color:var(--accent);cursor:pointer}
+.goal-scale{display:flex;justify-content:space-between;font-size:11px;color:var(--secondaire);margin-top:4px}
+.side-card .goal-group .goal-status{margin:8px 0 0}
