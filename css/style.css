@@ -173,3 +173,17 @@ button:hover{background:var(--accent-fonce);border-color:var(--accent-fonce)}
 #exercise-draw:disabled{opacity:.6;cursor:wait}
 #exercise-message{font-size:12px;color:var(--secondaire);margin:3px 0}
 #exercise-title{font-size:15px;font-weight:700;color:var(--accent-fonce);margin:0 0 12px}
+
+/* Exercices : commande discrète à droite et deux jauges compactes. */
+.exercise-picker{font-size:12px;padding-bottom:9px;margin-bottom:10px}
+.exercise-picker>.exercise-switch{display:flex;justify-content:flex-end;align-items:center;gap:5px;font-size:11px;font-weight:400;color:var(--secondaire);margin:0}
+.exercise-switch input{width:13px;height:13px;margin:0;accent-color:var(--accent)}
+#exercise-options{padding:9px 0 0;gap:5px}
+.exercise-controls{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:15px}
+.exercise-control{min-width:0}
+.exercise-control label{display:flex!important;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:3px;font-size:11px;font-weight:500;margin:0 0 5px!important;color:var(--secondaire)}
+.exercise-control output{font-weight:700;color:var(--accent-fonce)}
+.exercise-control .goal-scale{font-size:10px}
+#exercise-draw{justify-self:end;font-size:11px;padding:6px 10px;font-weight:600}
+#exercise-message{font-size:11px;text-align:right}
+@media(max-width:520px){.exercise-controls{gap:9px}.exercise-control label{font-size:10px}.exercise-control .goal-scale{font-size:9px}}
