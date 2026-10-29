@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Lexi Lab — Évaluer la richesse de vocabulaire</title>
-<link rel="stylesheet" href="css/style.css?v=20261029-10"></head>
+<link rel="stylesheet" href="css/style.css?v=20261029-11"></head>
 <body>
 <header><h1>Lexi Lab</h1><p class="subtitle">Travaillez votre vocabulaire</p></header>
 <main><div class="workspace">
@@ -18,7 +18,7 @@
 <div id="exercise-options" hidden>
 <div class="exercise-controls">
 <div class="exercise-control"><label for="exercise-words">Nombre de mots</label><input class="goal-slider" id="exercise-words" type="range" min="50" max="800" step="10" value="420"><div class="exercise-word-value" id="exercise-words-value" aria-hidden="true">420</div><div class="goal-scale"><span>50</span><span>800 mots</span></div></div>
-<div class="exercise-control"><label for="exercise-difficulty">Difficulté</label><div class="difficulty-track"><div class="difficulty-fill" aria-hidden="true"></div><input class="goal-slider" id="exercise-difficulty" type="range" min="1" max="4" step="1" value="2"></div><div class="goal-scale"><span>Facile</span><span>Difficile</span></div></div>
+<div class="exercise-control"><label for="exercise-difficulty">Difficulté</label><div class="difficulty-track"><div class="difficulty-blocks" aria-hidden="true"><span></span><span></span><span></span><span></span></div><input class="goal-slider" id="exercise-difficulty" type="range" min="1" max="4" step="1" value="2"></div><div class="goal-scale"><span>Facile</span><span>Difficile</span></div></div>
 </div>
 <button type="button" id="exercise-draw">Tirer un texte au hasard</button><p id="exercise-message" role="status" aria-live="polite"></p>
 </div></div><div id="exercise-title" hidden></div><label for="input" class="sr-only">Texte à analyser</label>
@@ -56,5 +56,5 @@
 <span id="lemmas"></span><span id="coverage"></span><span id="detail"></span>
 <table><tbody id="table"></tbody></table><span id="uniques"></span>
 </div></main>
-<script src="js/app.js?v=20261029-9"></script>
+<script src="js/app.js?v=20261029-11"></script>
 <script>fetch("data/lexique.json").then(r=>{if(!r.ok)throw Error("Dictionnaire indisponible");return r.json()}).then(demarrerLexiLab).catch(e=>{console.error(e);const note=document.getElementById("gauge-note");note.hidden=false;note.textContent="Erreur de chargement du dictionnaire."})</script></body></html>
