@@ -96,7 +96,7 @@ async function drawExercise(){
   title.textContent=picked.numero+' – '+picked.titre;title.hidden=false;
   const metrics=currentMetrics();
   for(const [id,value] of [['goal-words',requested],['goal-diversity',Math.min(100,Math.ceil(metrics.diversity+3))],['goal-richness',Math.min(10,Math.ceil(metrics.richness+2))]]){
-   const slider=document.getElementById(id);slider.value=value;chosenGoals.add(id);
+   const slider=document.getElementById(id);slider.value=value;chosenGoals.add(id);refreshSlider(slider);
   }
   refreshGoalLabels();analyze();updateMode();
   message.textContent='Extrait proposé : '+(excerpt.match(/[\p{L}]+(?:[-’\x27][\p{L}]+)*/gu)||[]).length+' mots. Vous pouvez améliorer le texte.';
