@@ -14,7 +14,7 @@
 <div class="diversity-block"><div class="eyebrow">Diversité lexicale</div><div class="diversity-score" id="diversity-score" aria-live="polite">—</div></div>
 </aside>
 <section class="panel editor"><label for="input" class="sr-only">Texte à analyser</label>
-<div class="text-layer"><div id="word-tooltip" class="word-tooltip" role="tooltip" hidden></div><div id="highlight" class="highlight" aria-hidden="true"></div><textarea id="input" spellcheck="false" placeholder="Saisissez ou collez votre texte ici…"></textarea></div><div class="highlight-controls"><div class="highlight-toggles"><label class="highlight-toggle"><input type="checkbox" id="highlight-enabled" checked> Afficher la richesse du lexique</label><label class="highlight-toggle"><input type="checkbox" id="repetition-enabled"> Afficher les répétitions</label></div><div class="frequency-legend" aria-label="Légende des fréquences"><span><i class="freq-very-common"></i> Très courant</span><span><i class="freq-common"></i> Courant</span><span><i class="freq-uncommon"></i> Peu courant</span><span><i class="freq-rare"></i> Rare</span></div></div>
+<div class="text-layer"><div id="word-tooltip" class="word-tooltip" role="tooltip" hidden></div><div id="highlight" class="highlight" aria-hidden="true"></div><textarea id="input" spellcheck="false" placeholder="Saisissez ou collez votre texte ici…"></textarea></div><div class="highlight-controls"><div class="highlight-toggles"><label class="highlight-toggle"><input type="checkbox" id="highlight-enabled" checked> Afficher la richesse du lexique</label><label class="highlight-toggle"><input type="checkbox" id="repetition-enabled"> Afficher les répétitions</label></div><div class="frequency-legend" aria-label="Légende des fréquences"><span><i class="freq-very-common"></i> Très courants</span><span><i class="freq-common"></i> Courants</span><span><i class="freq-uncommon"></i> Peu courants</span><span><i class="freq-rare"></i> Rares</span></div></div>
 
 </section><aside class="goals-sidebar" aria-label="Objectifs et outils utiles">
 <div class="panel side-card"><div class="eyebrow">🎯 Objectifs</div>
@@ -48,5 +48,5 @@
 <span id="lemmas"></span><span id="coverage"></span><span id="detail"></span>
 <table><tbody id="table"></tbody></table><span id="uniques"></span>
 </div></main>
-<script src="js/app.js?v=20261029-1"></script>
+<script src="js/app.js?v=20261029-2"></script>
 <script>fetch("data/lexique.json").then(r=>{if(!r.ok)throw Error("Dictionnaire indisponible");return r.json()}).then(demarrerLexiLab).catch(e=>{console.error(e);const note=document.getElementById("gauge-note");note.hidden=false;note.textContent="Erreur de chargement du dictionnaire."})</script></body></html>
