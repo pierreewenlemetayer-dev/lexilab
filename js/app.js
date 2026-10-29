@@ -156,6 +156,21 @@ function syncHighlightScroll(){
 }
 function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 const input=document.getElementById('input');
+function refreshSlider(slider){
+ const min=Number(slider.min),max=Number(slider.max),value=Number(slider.value);
+ const percent=100*(value-min)/(max-min);
+ slider.style.setProperty('--progress',percent+'%');
+ if(slider.id==='exercise-words'){
+  const label=document.getElementById('exercise-words-value');
+  label.textContent=String(value);
+  label.style.left='calc('+percent+'% + '+(10-20*percent/100)+'px)';
+ }
+}
+for(const slider of document.querySelectorAll('input.goal-slider')){
+ refreshSlider(slider);
+ slider.addEventListener('input',()=>refreshSlider(slider));
+}
+
 const exerciseEnabled=document.getElementById('exercise-enabled');
 const exerciseOptions=document.getElementById('exercise-options');
 exerciseEnabled.addEventListener('change',()=>{
