@@ -219,3 +219,11 @@ input.goal-slider::-moz-range-track{background:linear-gradient(to right,var(--ac
 #exercise-difficulty::-moz-range-track{height:5px;background:transparent!important}
 #exercise-difficulty::-webkit-slider-thumb{margin-top:-7.5px}
 #exercise-options .difficulty-track + .goal-scale{margin-top:6px}
+
+/* Positionner les quatre centres du curseur aux limites 25/50/75/100 %. 
+   Le débord de 2,5 px compense la demi-largeur du curseur natif (5 px). */
+#exercise-options .difficulty-track #exercise-difficulty{
+ left:calc(25% - 2.5px);
+ width:calc(75% + 5px);
+ right:auto;
+}
