@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Lexi Lab — Évaluer la richesse de vocabulaire</title>
-<link rel="stylesheet" href="css/style.css?v=20261029-15"></head>
+<link rel="stylesheet" href="css/style.css?v=20261029-15"><style>h1 .home-title-link{color:inherit;font:inherit;letter-spacing:inherit;text-decoration:none;cursor:pointer}h1 .home-title-link:hover,h1 .home-title-link:visited,h1 .home-title-link:active{color:inherit;text-decoration:none}h1 .home-title-link:focus-visible{outline:2px solid currentColor;outline-offset:4px}</style></head>
 <body>
-<header><h1>Lexi Lab</h1><p class="subtitle">Travaillez votre vocabulaire</p></header>
+<header><h1><a class="home-title-link" href="./" aria-label="Revenir à l’accueil">Lexi Lab</a></h1><p class="subtitle">Travaillez votre vocabulaire</p></header>
 <main><div class="workspace">
 <aside class="panel sidebar" aria-label="Résultat de l'analyse">
 <div class="eyebrow">Indice de richesse lexicale</div>
@@ -58,4 +58,4 @@
 <table><tbody id="table"></tbody></table><span id="uniques"></span>
 </div></main>
 <script src="js/app.js?v=20261029-diversite-normalisee"></script>
-<script>fetch("data/lexique.json").then(r=>{if(!r.ok)throw Error("Dictionnaire indisponible");return r.json()}).then(demarrerLexiLab).catch(e=>{console.error(e);const note=document.getElementById("gauge-note");note.hidden=false;note.textContent="Erreur de chargement du dictionnaire."})</script></body></html>
+<script>fetch("data/lexique.json").then(r=>{if(!r.ok)throw Error("Dictionnaire indisponible");return r.json()}).then(demarrerLexiLab).catch(e=>{console.error(e);const note=document.getElementById("gauge-note");note.hidden=false;note.textContent="Erreur de chargement du dictionnaire."})</script><script>(function(){const link=document.querySelector('.home-title-link');link.addEventListener('click',e=>{if([...document.querySelectorAll('textarea')].some(x=>x.value.trim())&&!confirm('Un texte est en cours. Revenir à l’accueil et abandonner le texte ?'))e.preventDefault()})})();</script></body></html>
