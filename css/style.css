@@ -219,3 +219,6 @@ input.goal-slider::-moz-range-track{background:linear-gradient(to right,var(--ac
 
 /* Le curseur s'arrête au centre de chacun des quatre blocs. */
 #exercise-options .difficulty-track #exercise-difficulty{width:75%;margin:0 12.5%!important}
+
+/* Chaque position marque désormais la limite droite du bloc rempli. */
+#exercise-options .difficulty-track #exercise-difficulty{width:75%;margin:0 25% 0 0!important}
