@@ -187,3 +187,12 @@ button:hover{background:var(--accent-fonce);border-color:var(--accent-fonce)}
 #exercise-draw{justify-self:end;font-size:11px;padding:6px 10px;font-weight:600}
 #exercise-message{font-size:11px;text-align:right}
 @media(max-width:520px){.exercise-controls{gap:9px}.exercise-control label{font-size:10px}.exercise-control .goal-scale{font-size:9px}}
+
+/* Aligner les graduations exactement sous leurs jauges respectives. */
+#exercise-options .exercise-controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:18px;align-items:start;width:100%}
+#exercise-options .exercise-control{display:flex;flex-direction:column;min-width:0;width:100%;box-sizing:border-box}
+#exercise-options .exercise-control .goal-slider{display:block;width:100%;min-width:0;box-sizing:border-box;margin:0;flex:none}
+#exercise-options .exercise-control .goal-scale{display:flex;width:100%;box-sizing:border-box;justify-content:space-between;align-items:baseline;margin-top:6px;padding:0;gap:4px}
+#exercise-options .exercise-control .goal-scale span:last-child{text-align:right;margin-left:auto}
+#exercise-options .exercise-control label{width:100%;box-sizing:border-box}
+@media(max-width:520px){#exercise-options .exercise-controls{column-gap:10px}}
