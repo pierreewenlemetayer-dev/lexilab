@@ -196,3 +196,14 @@ button:hover{background:var(--accent-fonce);border-color:var(--accent-fonce)}
 #exercise-options .exercise-control .goal-scale span:last-child{text-align:right;margin-left:auto}
 #exercise-options .exercise-control label{width:100%;box-sizing:border-box}
 @media(max-width:520px){#exercise-options .exercise-controls{column-gap:10px}}
+
+/* Progression ocre sur toutes les jauges, sans modifier les pastilles d'objectifs. */
+input.goal-slider{background:transparent!important}
+input.goal-slider::-webkit-slider-runnable-track{background:linear-gradient(to right,var(--accent-fonce) 0%,var(--accent-fonce) var(--progress,0%),var(--bordure) var(--progress,0%),var(--bordure) 100%)}
+input.goal-slider::-moz-range-track{background:linear-gradient(to right,var(--accent-fonce) 0%,var(--accent-fonce) var(--progress,0%),var(--bordure) var(--progress,0%),var(--bordure) 100%)}
+#exercise-options .exercise-control{position:relative}
+#exercise-words{margin-bottom:17px!important}
+.exercise-word-value{position:absolute;top:49px;transform:translateX(-50%);font-size:10px;font-weight:700;color:var(--accent-fonce);pointer-events:none;white-space:nowrap}
+#exercise-difficulty{margin-bottom:7px!important}
+.difficulty-ticks{position:relative;display:flex;justify-content:space-between;height:8px;margin-top:-7px;padding:0 2px;pointer-events:none}
+.difficulty-ticks i{display:block;width:2px;height:7px;background:var(--accent-fonce);opacity:.6;border-radius:1px}
