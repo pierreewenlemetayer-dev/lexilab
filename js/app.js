@@ -160,7 +160,7 @@ function refreshSlider(slider){
  const min=Number(slider.min),max=Number(slider.max),value=Number(slider.value);
  const percent=100*(value-min)/(max-min);
  slider.style.setProperty('--progress',percent+'%');
- if(slider.id==='exercise-difficulty')slider.closest('.difficulty-track').style.setProperty('--difficulty-fill',(value*25)+'%');
+ if(slider.id==='exercise-difficulty'){slider.closest('.difficulty-track').querySelectorAll('.difficulty-blocks span').forEach((block,index)=>block.classList.toggle('active',index<value));}
  if(slider.id==='exercise-words'){
   const label=document.getElementById('exercise-words-value');
   label.textContent=String(value);
