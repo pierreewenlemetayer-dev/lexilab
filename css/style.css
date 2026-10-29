@@ -216,3 +216,6 @@ input.goal-slider::-moz-range-track{background:linear-gradient(to right,var(--ac
 #exercise-difficulty::-webkit-slider-runnable-track{background:transparent!important}
 #exercise-difficulty::-moz-range-track{background:transparent!important}
 #exercise-options .difficulty-track + .goal-scale{margin-top:6px}
+
+/* Le curseur s'arrête au centre de chacun des quatre blocs. */
+#exercise-options .difficulty-track #exercise-difficulty{width:75%;margin:0 12.5%!important}
