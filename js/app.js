@@ -21,7 +21,7 @@ function analyze(){
    }
  }
  updateGoal('words-status',formes.length?formes.length:null,goalValue('goal-words'));
- const diversite=unitesDiversite.length?new Set(unitesDiversite).size/unitesDiversite.length*100:0;
+ const diversite=unitesDiversite.length>1?(new Set(unitesDiversite).size-1)/(unitesDiversite.length-1)*100:0;
  document.getElementById('diversity-score').textContent=unitesDiversite.length?diversite.toLocaleString('fr-FR',{maximumFractionDigits:1,minimumFractionDigits:1})+' %':'—';
  updateGoal('diversity-status',unitesDiversite.length?diversite:null,goalValue('goal-diversity'));
  const raw=original.toLocaleLowerCase('fr').replace(apostrophes,"'");
@@ -62,7 +62,7 @@ function currentMetrics(){
  const forms=normalized.match(/[\p{L}]+(?:[-'][\p{L}]+)*/gu)||[];
  const units=[];
  for(const form of forms){const parts=(entries[form]||excluded.has(form))?[form]:form.split("'");for(const part of parts){if(!part)continue;const hit=excluded.has(part)?null:entries[part];units.push(hit?'lemme:'+hit[0]+'|'+hit[1]:'forme:'+part);}}
- const diversity=units.length?100*new Set(units).size/units.length:0;
+ const diversity=units.length>1?100*(new Set(units).size-1)/(units.length-1):0;
  const lemmas=new Map();
  for(const form of forms){const parts=(entries[form]||excluded.has(form))?[form]:form.split("'");for(const part of parts){if(!part||excluded.has(part))continue;const hit=entries[part];if(hit)lemmas.set(hit[0]+'|'+hit[1],hit[2]);}}
  const freqs=[...lemmas.values()],raw=freqs.length?freqs.reduce((a,b)=>a-Math.log10(b),0)/freqs.length:null;
