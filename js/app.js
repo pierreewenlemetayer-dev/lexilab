@@ -95,7 +95,7 @@ function renderHighlights(original){
    result+=esc(original.slice(last,unit.start));
    const cls=mode==='repetition'?(counts.get(unit.key)>1?'repeat-color-'+colorByKey.get(unit.key):''):unit.frequencyClass;
    const visible=esc(original.slice(unit.start,unit.end));
-   result+=cls?'<span class="'+cls+'"'+(mode==='frequency'?' data-frequency="'+(cls==='freq-very-common'?'Très fréquent':cls==='freq-common'?'Fréquent':cls==='freq-uncommon'?'Peu fréquent':'Rare')+'"':' data-repeat-key="'+esc(unit.key)+'"')+'>'+visible+'</span>':visible;
+   result+=cls?'<span class="'+cls+'"'+(mode==='frequency'?' data-frequency="'+(cls==='freq-very-common'?'Très courant':cls==='freq-common'?'Courant':cls==='freq-uncommon'?'Peu courant':'Rare')+'"':' data-repeat-key="'+esc(unit.key)+'"')+'>'+visible+'</span>':visible;
    last=unit.end;
  }
  result+=esc(original.slice(last));
