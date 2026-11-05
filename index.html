@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Lexi Lab — Évaluer la richesse de vocabulaire</title>
-<link rel="stylesheet" href="css/style.css?v=20261105-affichage-corrige"><style>h1 .home-title-link{color:inherit;font:inherit;letter-spacing:inherit;text-decoration:none;cursor:pointer}h1 .home-title-link:hover,h1 .home-title-link:visited,h1 .home-title-link:active{color:inherit;text-decoration:none}h1 .home-title-link:focus-visible{outline:2px solid currentColor;outline-offset:4px}</style></head>
+<link rel="stylesheet" href="css/style.css?v=20261105-mention-ia"><style>h1 .home-title-link{color:inherit;font:inherit;letter-spacing:inherit;text-decoration:none;cursor:pointer}h1 .home-title-link:hover,h1 .home-title-link:visited,h1 .home-title-link:active{color:inherit;text-decoration:none}h1 .home-title-link:focus-visible{outline:2px solid currentColor;outline-offset:4px}</style></head>
 <body>
 <header><h1><a class="home-title-link" href="./" aria-label="Revenir à l’accueil">Lexi Lab</a></h1><p class="subtitle">Travaillez votre vocabulaire</p></header>
 <main><div class="workspace">
@@ -21,7 +21,7 @@
 <div class="exercise-control"><label for="exercise-difficulty">Difficulté</label><div class="difficulty-track"><div class="difficulty-blocks" aria-hidden="true"><span></span><span></span><span></span><span></span></div><input class="goal-slider" id="exercise-difficulty" type="range" min="1" max="4" step="1" value="2"></div><div class="goal-scale"><span>Facile</span><span>Difficile</span></div></div>
 </div>
 <button type="button" id="exercise-draw">Tirer un texte au hasard</button><p id="exercise-message" role="status" aria-live="polite"></p>
-</div></div><div id="exercise-title" hidden></div><label for="input" class="sr-only">Texte à analyser</label>
+</div></div><div id="exercise-title" hidden></div><p id="exercise-ai-note">Sauf mention contraire, les textes ont été générés par une I.A., relus et corrigés par un humain.</p><label for="input" class="sr-only">Texte à analyser</label>
 <div class="text-layer"><div id="word-tooltip" class="word-tooltip" role="tooltip" hidden></div><div id="highlight" class="highlight" aria-hidden="true"></div><textarea id="input" spellcheck="false" placeholder="Saisissez ou collez votre texte ici…"></textarea></div><div class="highlight-controls"><div class="highlight-toggles"><label class="highlight-toggle"><input type="checkbox" id="highlight-enabled" checked> Afficher la richesse du lexique</label><label class="highlight-toggle"><input type="checkbox" id="repetition-enabled"> Afficher les répétitions</label></div><div class="frequency-legend" aria-label="Légende des fréquences"><span><i class="freq-very-common"></i> Très courants</span><span><i class="freq-common"></i> Courants</span><span><i class="freq-uncommon"></i> Peu courants</span><span><i class="freq-rare"></i> Rares</span></div></div>
 
 </section><aside class="goals-sidebar" aria-label="Objectifs et outils utiles">
