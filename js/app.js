@@ -49,7 +49,7 @@ function analyze(){
  const marker=document.getElementById('marker');
  const pct=note10===null?0:(note10-1)/9*100;
  marker.style.left=pct+'%';
- document.getElementById('raw-index').textContent=fmt(ifraw);
+ // L'indice brut n'est plus affiché dans l'interface.
  document.getElementById('lemmas').textContent=items.length;
  document.getElementById('coverage').textContent=records.length?Math.round(100*recognized/records.length)+' %':'—';
  document.getElementById('detail').textContent=`${tokens.length} unités initiales · ${records.length} unités après séparation des apostrophes · ${dropped.length} exclusions · ${unknown.length} non reconnues`;
@@ -97,6 +97,7 @@ async function drawExercise(){
   document.getElementById('input').value=excerpt;
   // Ne pas afficher l'ancien calque pendant le remplacement du texte.
   document.getElementById('input').classList.remove('highlight-on');
+  document.getElementById('highlight').hidden=true;
   const title=document.getElementById('exercise-title');
   title.textContent=picked.numero+' – '+picked.titre;title.hidden=false;
   const metrics=currentMetrics();
@@ -106,7 +107,7 @@ async function drawExercise(){
   refreshGoalLabels();analyze();updateMode();
   message.textContent='Extrait proposé : '+(excerpt.match(/[\p{L}]+(?:[-’\x27][\p{L}]+)*/gu)||[]).length+' mots. Vous pouvez améliorer le texte.';
  }catch(error){console.error(error);message.textContent=error.message==='Chargement du corpus impossible'?'Impossible de charger les textes de Récits. Réessayez.':'Le texte a été chargé, mais une erreur est survenue pendant sa préparation.';}
- finally{button.disabled=false;}
+ finally{updateMode();button.disabled=false;}
 }
 function updateGoal(id,score,targetValue){
  const dot=document.getElementById(id),target=Number(targetValue);
