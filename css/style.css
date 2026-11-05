@@ -236,3 +236,7 @@ input.goal-slider::-moz-range-track{background:linear-gradient(to right,var(--ac
 
 /* Le texte de saisie ne doit jamais apparaître simultanément au calque. */
 .text-layer textarea:not(.highlight-on){background:#fff}
+
+/* Mention éditoriale affichée uniquement avec un texte tiré au hasard. */
+#exercise-ai-note{margin:3px 0 12px;color:#999;font-size:11px;line-height:1.4}
+#exercise-title[hidden] + #exercise-ai-note{display:none}
