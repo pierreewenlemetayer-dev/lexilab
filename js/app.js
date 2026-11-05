@@ -69,7 +69,7 @@ function currentMetrics(){
  const richness=raw===null?1:Math.max(1,Math.min(10,1+9*(raw+2.660986)/(-1.074392+2.660986)));
  return {diversity,richness};
 }
-async function drawExercise(){
+async async function drawExercise(){
  const message=document.getElementById('exercise-message'),button=document.getElementById('exercise-draw');
  button.disabled=true;message.textContent='Chargement du corpus…';
  try{
@@ -95,6 +95,8 @@ async function drawExercise(){
    excerpt=match?full.slice(0,boundary+match.index+match[0].length):full;
   }
   document.getElementById('input').value=excerpt;
+  // Ne pas afficher l'ancien calque pendant le remplacement du texte.
+  document.getElementById('input').classList.remove('highlight-on');
   const title=document.getElementById('exercise-title');
   title.textContent=picked.numero+' – '+picked.titre;title.hidden=false;
   const metrics=currentMetrics();
