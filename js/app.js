@@ -73,9 +73,12 @@ async function drawExercise(){
  const message=document.getElementById('exercise-message'),button=document.getElementById('exercise-draw');
  button.disabled=true;message.textContent='Chargement du corpus…';
  try{
-  const response=await fetch('https://pierreewenlemetayer-dev.github.io/recits/corpus.json',{cache:'no-store'});
-  if(!response.ok)throw Error('Corpus indisponible');
-  const corpus=await response.json();
+  let response;
+  try{response=await fetch('https://pierreewenlemetayer-dev.github.io/recits/corpus.json',{cache:'no-store'});}
+  catch(error){throw new Error('Chargement du corpus impossible',{cause:error});}
+  let corpus;
+  try{if(!response.ok)throw Error('HTTP '+response.status);corpus=await response.json();}
+  catch(error){throw new Error('Chargement du corpus impossible',{cause:error});}
   const ranges={1:[10,12],2:[7,9],3:[4,6],4:[1,3]};
   const [low,high]=ranges[document.getElementById('exercise-difficulty').value];
   const candidates=corpus.filter(x=>Number(x.etoiles)>=low&&Number(x.etoiles)<=high&&typeof x.texte==='string'&&x.texte.trim());
@@ -100,7 +103,7 @@ async function drawExercise(){
   }
   refreshGoalLabels();analyze();updateMode();
   message.textContent='Extrait proposé : '+(excerpt.match(/[\p{L}]+(?:[-’\x27][\p{L}]+)*/gu)||[]).length+' mots. Vous pouvez améliorer le texte.';
- }catch(error){console.error(error);message.textContent='Impossible de charger les textes de Récits. Réessayez.';}
+ }catch(error){console.error(error);message.textContent=error.message==='Chargement du corpus impossible'?'Impossible de charger les textes de Récits. Réessayez.':'Le texte a été chargé, mais une erreur est survenue pendant sa préparation.';}
  finally{button.disabled=false;}
 }
 function updateGoal(id,score,targetValue){
