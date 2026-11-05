@@ -79,7 +79,7 @@ async function drawExercise(){
   let corpus;
   try{if(!response.ok)throw Error('HTTP '+response.status);corpus=await response.json();}
   catch(error){throw new Error('Chargement du corpus impossible',{cause:error});}
-  const ranges={1:[10,12],2:[7,9],3:[4,6],4:[1,3]};
+  const ranges={1:[1,3],2:[4,6],3:[7,9],4:[10,12]};
   const [low,high]=ranges[document.getElementById('exercise-difficulty').value];
   const candidates=corpus.filter(x=>Number(x.etoiles)>=low&&Number(x.etoiles)<=high&&typeof x.texte==='string'&&x.texte.trim());
   if(!candidates.length){message.textContent='Aucun texte disponible pour cette difficulté.';return;}
