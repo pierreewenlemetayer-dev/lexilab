@@ -52,10 +52,10 @@
 <p><a href="https://www.lexique.org/vocabulaire/" target="_blank" rel="noopener noreferrer">Tester son niveau</a></p>
 </div></aside></div>
 <details class="about panel"><summary>À propos</summary><div class="about-content">
-<p>Lexi Lab estime la rareté du vocabulaire d’un texte à partir des fréquences lexicales de <a href="https://www.lexique.org/" target="_blank" rel="noopener noreferrer">Lexique 4</a>. L’étalonnage a été effectué à partir d’un corpus de 76 textes narratifs. L’analyse est réalisée localement dans le navigateur.</p>
+<p>Lexi Lab estime la rareté du vocabulaire d’un texte à partir des fréquences lexicales de <a href="https://www.lexique.org/" target="_blank" rel="noopener noreferrer">Lexique 4</a>. L’analyse est réalisée localement dans le navigateur.</p>
 <p>Il ne s’agit ni d’une note scolaire ni d’une mesure directe de compréhension ou de qualité d’écriture.</p>
 <p>Le calcul utilisé pour l’indice de richesse lexicale est le suivant : après exclusion de certaines catégories grammaticales et des mots inconnus, chaque couple <strong>lemme–catégorie grammaticale</strong> reconnu n’est compté qu’une seule fois, même s’il apparaît plusieurs fois dans le texte. Pour chacun de ces couples, on calcule <strong>−log₁₀(f)</strong>, où <em>f</em> est sa fréquence dans Lexique 4. L’indice brut est la <strong>moyenne</strong> de ces valeurs : plus il est élevé, plus le vocabulaire reconnu est rare.</p>
-<p>Cet indice brut est ensuite converti sur une échelle expérimentale de <strong>1 à 10</strong>, étalonnée sur les 76 récits : <strong>indice affiché = 1 + 9 × (indice brut + 2,660986) / 1,586594</strong>. Le résultat est limité à l’intervalle de 1 à 10. L’indice brut du texte analysé est : <span id="raw-index">—</span>.</p>
+<p>Cet indice brut est ensuite converti sur une échelle expérimentale de <strong>1 à 10</strong>, étalonnée à partir d'un corpus de 76 textes narratifs sélectionnés pour leur représentativité : <strong>indice affiché = 1 + 9 × (indice brut + 2,660986) / 1,586594</strong>. Le résultat est limité à l’intervalle de 1 à 10.</p>
 <p>Le surlignage classe les mots reconnus selon leur fréquence dans Lexique 4, avec des seuils fixes : très courants (≥ 100), courants (≥ 10 et &lt; 100), peu courants (≥ 1 et &lt; 10), rares (&lt; 1). Les formes exclues et les mots inconnus ne sont pas surlignés. Ces catégories représentent des fréquences, pas des niveaux de difficulté scolaire.</p>
 </div></details>
 <footer class="site-footer">© Lexi Lab – Pierre Lemétayer – 2026</footer>
