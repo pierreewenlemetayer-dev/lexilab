@@ -233,3 +233,6 @@ input.goal-slider::-moz-range-track{background:linear-gradient(to right,var(--ac
 .useful-tools p{margin:0!important;padding:7px 0}
 .useful-tools p+p{border-top:1px solid color-mix(in srgb,var(--bordure) 55%,transparent)}
 .useful-tools a{display:block;font-size:13px;line-height:1.4}
+
+/* Le texte de saisie ne doit jamais apparaître simultanément au calque. */
+.text-layer textarea:not(.highlight-on){background:#fff}
