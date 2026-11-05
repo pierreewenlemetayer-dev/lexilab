@@ -69,7 +69,7 @@ function currentMetrics(){
  const richness=raw===null?1:Math.max(1,Math.min(10,1+9*(raw+2.660986)/(-1.074392+2.660986)));
  return {diversity,richness};
 }
-async async function drawExercise(){
+async function drawExercise(){
  const message=document.getElementById('exercise-message'),button=document.getElementById('exercise-draw');
  button.disabled=true;message.textContent='Chargement du corpus…';
  try{
